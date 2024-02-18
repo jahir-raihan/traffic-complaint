@@ -39,8 +39,9 @@
 
         </nav>
     </header>
+    <div class="main"></div>
 
-    <div class="container w-[90%] max-w-[1600px] h-[88vh] m-auto mt-[10%] flex justify-center items-center">
+    <div class="container w-[90%] max-w-[1600px] m-auto mt-[10%] flex justify-center items-center">
         <div class="w-full">
 
             <div class=" w-full  p-5 rounded-[8px] bg-[#353a40]   shadow-[#000]   m-auto">
@@ -63,27 +64,27 @@
 
                         </div>
 
-                        <div class="input flex items-center justify-between *:block gap-3">
-                            <div class="w-2/4">
+                        <div class="input flex max-[650px]:block items-center justify-between *:block gap-3">
+                            <div class="w-2/4 max-[650px]:w-full max-[650px]:mb-4">
                                 <label for="" class="text-white font-medium block mb-2">Location of crime</label>
                                 <input type="text" placeholder="Location of crime" class=" outline-none  h-[46px] rounded-[4px] p-2 w-full">
                             </div>
 
-                            <div class="w-2/4">
+                            <div class="w-2/4 max-[650px]:w-full max-[650px]:mb-4">
                                 <label for="" class="text-white font-medium block mb-2">Vehicle Number</label>
                                 <input type="text" placeholder="Location of crime" class=" outline-none h-[46px] rounded-[4px] p-2 w-full">
                             </div>
                             
                         </div>
 
-                        <div class="input flex justify-between items-center w-full gap-3">
-                            <div class="w-2/4">
+                        <div class="input flex max-[650px]:block justify-between items-center w-full gap-3">
+                            <div class="w-2/4 max-[650px]:w-full max-[650px]:mb-4">
                                 <label for="" class="text-white font-medium block mb-2">Image of the vehicle</label>
                                 <input type="file" accept="file_extension|.jpg,.png,.jpeg" class="text-[#353a40] p-2 rounded-[4px] w-full bg-white" placeholder="Full image of the vehicle">
                                 <div id="image_preview1"></div>
                             </div>
 
-                            <div class="w-2/4">
+                            <div class="w-2/4 max-[650px]:w-full max-[650px]:mb-4">
                                 <label for="" class="text-white font-medium block mb-2">Image of number plate</label>
                                 <input type="file" accept="file_extension|.jpg,.png,.jpeg" class="text-[#353a40] p-2  rounded-[4px] w-full bg-white">
                                 <div id="image_preview2"></div>
@@ -92,13 +93,13 @@
                             
                         </div>
 
-                        <div class="input w-full flex justify-between gap-3 items-center">
-                            <div class="w-2/4">
+                        <div class="input w-full max-[650px]:block flex justify-between gap-3 items-center">
+                            <div class="w-2/4 max-[650px]:w-full max-[650px]:mb-4">
                                 <label for="" class="text-white font-medium block mb-2">Short video - (Optional)</label>
                                 <input type="file" accept="video/mp4,video/mkv, video/x-m4v,video/*" class="text-[#353a40] p-2 rounded-[4px] w-full bg-white">
                             </div>
 
-                            <div class="w-2/4">
+                            <div class="w-2/4 max-[650px]:w-full max-[650px]:mb-4">
                                 <label for="" class="text-white font-medium block mb-2">Your contact</label>
                                 <input type="text" placeholder="Your phone number of email" class="outline-none h-[46px] rounded-[4px] p-2 w-full">
                             </div>
@@ -111,7 +112,7 @@
                             <textarea name="" id="" cols="30" rows="10" class="w-full max-h-[200px] max-w-[100%] outline-none min-h-[100px] p-2 rounded-[4px]" placeholder="Enter your complaint note"></textarea>
                         </div>
 
-                        <button class="submit">Submit</button>
+                        <button class="submit w-full bg-[#689095] h-[40px] my-[16px] rounded-[4px] text-white font-medium">Submit</button>
 
 
 
@@ -125,9 +126,10 @@
         </div>
     </div>  
 
-    <footer class="w-90% m-auto">
-        <p class="text-white text-center font-semibold text-xs opacity-7">Copyright all rights reserved to @github.com/jahir-raihan - 2024</p>
+    <footer class="w-90% m-auto my-[40px]">
+        <p class="text-white text-center font-semibold text-xs opacity-7">Copyright all rights reserved to <a target="_blank" href="https://github.com/jahir-raihan">@github.com/jahir-raihan</a> - 2024</p>
     </footer>
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
