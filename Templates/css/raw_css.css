@@ -1,0 +1,43 @@
+.selectize-control {
+    opacity: 1 !important;
+    padding:0;
+    height:46px !important;
+    
+}
+.selectize-input {
+    opacity: 1 !important;
+    height:46px !important;
+    display: flex;
+    align-items: center;
+    
+}
+
+.selectize-input input{
+
+    font-size:16px !important;
+}
+
+.item{
+
+    font-size:16px !important;
+}
+.selectize-content {
+    opacity: 1 !important;
+    height:46px !important;
+    
+}
+.selectize-dropdown {
+    opacity: 1 !important;
+    width:100% !important;
+    left:0 !important;
+    top:40px !important;
+    
+    
+    
+}
+
+
+.input{
+
+    margin-bottom: 1em;
+}
