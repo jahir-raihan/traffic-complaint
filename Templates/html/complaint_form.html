@@ -12,6 +12,8 @@
         crossorigin="anonymous"
         referrerpolicy="no-referrer"
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
     <link rel="stylesheet" href="../css/output.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.min.css" integrity="sha512-wCrId7bUEl7j1H60Jcn4imkkiIYRcoyq5Gcu3bpKAZYBJXHVMmkL4rhtyhelxSFuPMIoQjiVsanrHxcs2euu/w==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
@@ -25,7 +27,7 @@
         <nav class="flex justify-between w-[90%] m-auto max-w-[1600px] h-[100%] items-center">
             <div class="left-nav">
                 <div class="logo">
-                    <p class="font-medium text-white text-2xl" >Traffic <span class="text-red-400">Complaint</span></p>
+                    <a href="index.html" class="font-medium text-white text-2xl" >Traffic <span class="text-red-400">Complaint</span></a>
                 </div>
             </div>
 
@@ -39,9 +41,21 @@
 
         </nav>
     </header>
-    <div class="main"></div>
 
-    <div class="container w-[90%] max-w-[1600px] m-auto mt-[10%] flex justify-center items-center">
+
+    <div class="w-full h-svh flex items-center justify-center hidden">
+        <div>
+            <p class="font-semibold text-green-600 text-center">Submitted Successfully !</p>
+            <a href="#">
+                <button class="bg-white py-2 px-2 rounded-md w-full mt-3 hover:text-white hover:bg-slate-500">See all complaints</button>
+            </a>
+
+            
+        </div>
+        
+    </div>
+
+    <div class="container w-[90%] max-w-[1600px] m-auto mt-[10%] flex justify-center items-center ">
         <div class="w-full">
 
             <div class=" w-full  p-5 rounded-[8px] bg-[#353a40]   shadow-[#000]   m-auto">
@@ -110,7 +124,10 @@
                             <textarea name="" id="" cols="30" rows="10" class="w-full max-h-[200px] max-w-[100%] outline-none min-h-[100px] p-2 rounded-[4px]" placeholder="Enter your complaint note"></textarea>
                         </div>
 
-                        <button class="submit w-full bg-[#689095] h-[40px] my-[16px] rounded-[4px] text-white font-medium">Submit</button>
+                        <button class="submit w-full bg-[#689095] h-[40px] my-[16px] rounded-[4px] text-white font-medium">
+                            <i class="fas fa-circle-notch animate-spin"></i>
+                            Submitting ...
+                        </button>
 
                     </form>
                 </div>
