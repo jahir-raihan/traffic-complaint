@@ -42,8 +42,17 @@
     margin-bottom: 1em;
 }
 
+
+.profile .profile-left{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
 @media only screen and (max-width:600px){
-    .complaint-card{
+    .complaint-card, .profile{
         display: block;
         
     }
@@ -51,4 +60,5 @@
         margin-top:1em;
         text-align: left;
     }
+    
 }
