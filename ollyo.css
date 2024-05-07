@@ -1,0 +1,43 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 90%;
+  margin: auto;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+}
+.container .circle-container {
+  position: relative;
+  height: 90%;
+  width: 95%;
+  border: 1px solid blue;
+}
+.container .circle-container .circle-1, .container .circle-container .circle-2 {
+  height: 400px;
+  width: 400px;
+  border-radius: 50%;
+  border: 1px solid red;
+  position: absolute;
+}
+.container .circle-container .circle-1 {
+  left: 40%;
+  border: 1px solid green;
+  top: 25%;
+  mix-blend-mode: exclusion;
+}
+.container .circle-container .circle-2 {
+  height: 370px;
+  width: 370px;
+  left: 45%;
+  top: 15%;
+  background: rgb(35, 195, 183);
+  background: linear-gradient(354deg, rgb(35, 195, 183) 14%, rgb(44, 211, 140) 55%, rgb(80, 232, 87) 94%);
+  mix-blend-mode: exclusion;
+}/*# sourceMappingURL=ollyo.css.map */
