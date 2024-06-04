@@ -42,10 +42,15 @@
         </nav>
     </header>
 
-    <div class="container w-[90%] max-w-[1600px]  options   mt-8  rounded-[8px] shadow-[#000000]  m-auto ">
-
-
+    <div class="container w-[90%] max-w-[1600px]  options relative  mt-8  rounded-[8px] shadow-[rgb(0,0,0)]  m-auto ">
+        
         <div class="w-full">
+
+            <button onclick="history.back()" class="bg-white rounded py-2 px-2 w-[100px] my-2 mb-6">
+                <i class="fas fa-arrow-left"></i>
+                Back
+            </button>
+
             <form action="">
                 <div class="input" >
                     <label for="" class="text-white font-medium block mb-2">Police Station</label>
@@ -86,7 +91,7 @@
                     <div class="complaint-card flex w-full justify-between items-center p-5 bg-slate-50 rounded-md shadow-sm shadow-slate-50 my-4 sm:flex">
 
                         <div class="complaint-card-left opacity-[.8]">
-                            <p><b>Complaing no:</b> 1213010318313</p>
+                            <p><b>Complaint no:</b> 1213010318313</p>
                             <p><b>Vehicle number:</b> 11-4565</p>
                             <p><b>Location of crime:</b> Merul Badda, DIT Project Dhaka</p>
                             <p><b>Complaint time:</b> 11 May, 2024 - 10:12 PM</p>
@@ -112,7 +117,7 @@
                     <div class="complaint-card flex w-full justify-between items-center p-5 bg-slate-50 rounded-md shadow-sm shadow-slate-50 my-4 sm:flex">
 
                         <div class="complaint-card-left opacity-[.8]">
-                            <p><b>Complaing no:</b> 1213010318313</p>
+                            <p><b>Complaint no:</b> 1213010318313</p>
                             <p><b>Vehicle number:</b> 11-4565</p>
                             <p><b>Location of crime:</b> Merul Badda, DIT Project Dhaka</p>
                             <p><b>Complaint time:</b> 11 May, 2024 - 10:12 PM</p>
@@ -138,7 +143,7 @@
                     <div class="complaint-card flex w-full justify-between items-center p-5 bg-slate-50 rounded-md shadow-sm shadow-slate-50 my-4 sm:flex">
 
                         <div class="complaint-card-left opacity-[.8]">
-                            <p><b>Complaing no:</b> 1213010318313</p>
+                            <p><b>Complaint no:</b> 1213010318313</p>
                             <p><b>Vehicle number:</b> 11-4565</p>
                             <p><b>Location of crime:</b> Merul Badda, DIT Project Dhaka</p>
                             <p><b>Complaint time:</b> 11 May, 2024 - 10:12 PM</p>
@@ -164,7 +169,7 @@
                     <div class="complaint-card flex w-full justify-between items-center p-5 bg-slate-50 rounded-md shadow-sm shadow-slate-50 my-4 sm:flex">
 
                         <div class="complaint-card-left opacity-[.8]">
-                            <p><b>Complaing no:</b> 1213010318313</p>
+                            <p><b>Complaint no:</b> 1213010318313</p>
                             <p><b>Vehicle number:</b> 11-4565</p>
                             <p><b>Location of crime:</b> Merul Badda, DIT Project Dhaka</p>
                             <p><b>Complaint time:</b> 11 May, 2024 - 10:12 PM</p>
@@ -191,6 +196,15 @@
             </ul>
         </div>
 
+    </div>
+
+    <div class="modal h-3/4 w-[70%] fixed top-[7.5em] left-[15%] z-[100] max-w[1400px] shadow-[#000000] shadow-lg rounded  bg-white">
+        <div class="modal-header flex justify-between">
+            <p class="modal-title">Modal Title</p>
+            <i class="fas fa-xmark"></i>
+        </div>
+        <div class="modal-body"></div>
+        <div class="modal-footer"></div>
     </div>
 
 

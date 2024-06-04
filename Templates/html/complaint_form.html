@@ -42,6 +42,8 @@
         </nav>
     </header>
 
+    
+
 
     <div class="w-full h-svh flex items-center justify-center hidden">
         <div>
@@ -55,8 +57,14 @@
         
     </div>
 
-    <div class="container w-[90%] max-w-[1600px] m-auto mt-[10%] flex justify-center items-center ">
+    <div class="container w-[90%] max-w-[1600px] m-auto mt-[5%] flex justify-center items-center ">
+
+        
         <div class="w-full">
+            <button onclick="history.back()" class="bg-white rounded py-2 px-2 w-[100px] my-2 mb-6">
+                <i class="fas fa-arrow-left"></i>
+                Back
+            </button>
 
             <div class=" w-full  p-5 rounded-[8px] bg-[#353a40]   shadow-[#000]   m-auto">
                 <h1 class="text-xl text-[white] font-medium text-center">Complaint Form</h1>
@@ -67,7 +75,7 @@
                 <div class="w-full">
                     <form action="">
                         <div class="input">
-                            <label for="" class="text-white font-medium block mb-2">Police Station</label>
+                            <label for="" class="text-white font-medium block mb-2">Police Station <span class="text-red-400">*</span></label>
                             <select name="" id="police_station" class="border-none w-full  p-4 opacity-[0.8] outline-none">
                                 <option value="">Select Police Station</option>
                                 <option value="s">s</option>
@@ -80,12 +88,12 @@
 
                         <div class="input flex max-[650px]:block items-center justify-between *:block gap-3">
                             <div class="w-2/4 max-[650px]:w-full max-[650px]:mb-4">
-                                <label for="" class="text-white font-medium block mb-2">Location of crime</label>
+                                <label for="" class="text-white font-medium block mb-2">Location of crime <span class="text-red-400">*</span></label>
                                 <input type="text" placeholder="Location of crime" class=" outline-none  h-[46px] rounded-[4px] p-2 w-full">
                             </div>
 
                             <div class="w-2/4 max-[650px]:w-full max-[650px]:mb-4">
-                                <label for="" class="text-white font-medium block mb-2">Vehicle Number</label>
+                                <label for="" class="text-white font-medium block mb-2">Vehicle Number </label>
                                 <input type="text" placeholder="Location of crime" class=" outline-none h-[46px] rounded-[4px] p-2 w-full">
                             </div>
                             
@@ -93,13 +101,13 @@
 
                         <div class="input flex max-[650px]:block justify-between items-center w-full gap-3">
                             <div class="w-2/4 max-[650px]:w-full max-[650px]:mb-4">
-                                <label for="" class="text-white font-medium block mb-2">Image of the vehicle</label>
+                                <label for="" class="text-white font-medium block mb-2">Image <span class="text-red-400">*</span></label>
                                 <input type="file" accept="file_extension|.jpg,.png,.jpeg" class="text-[#353a40] p-2 rounded-[4px] w-full bg-white" placeholder="Full image of the vehicle">
                                 <div id="image_preview1"></div>
                             </div>
 
                             <div class="w-2/4 max-[650px]:w-full max-[650px]:mb-4">
-                                <label for="" class="text-white font-medium block mb-2">Image of number plate</label>
+                                <label for="" class="text-white font-medium block mb-2">Image - [Optional]</label>
                                 <input type="file" accept="file_extension|.jpg,.png,.jpeg" class="text-[#353a40] p-2  rounded-[4px] w-full bg-white">
                                 <div id="image_preview2"></div>
                             </div>
@@ -120,7 +128,7 @@
                         </div>
 
                         <div class="input w-full">
-                            <label for="" class="text-white font-medium block mb-2">Complaint Note</label>
+                            <label for="" class="text-white font-medium block mb-2">Complaint Note <span class="text-red-400">*</span></label>
                             <textarea name="" id="" cols="30" rows="10" class="w-full max-h-[200px] max-w-[100%] outline-none min-h-[100px] p-2 rounded-[4px]" placeholder="Enter your complaint note"></textarea>
                         </div>
 
