@@ -97,9 +97,9 @@
                             <p class="status font-medium">Status</p>
                             <p class="text-orange-400">Investigating</p>
 
-                            <button class="view-proof-btn bg-slate-500 p-2 px-5 rounded text-white hover:bg-slate-400 mt-4">
+                            <button onclick="enable_modal('modal_id')" class="view-proof-btn bg-slate-500 p-2 px-5 rounded text-white hover:bg-slate-400 mt-4">
                                 <i class="fas fa-receipt mr-1"></i>
-                                View Proof
+                                View Details
                             </button>
                         </div>
                     </div>
@@ -107,6 +107,15 @@
             </ul>
         </div>
 
+    </div>
+
+    <div class="modal h-3/4 w-[70%] fixed top-[7.5em] p-4 left-[15%] z-[100] max-w[1400px] shadow-[#000000] shadow-2xl hidden rounded  bg-white " id="modal_id">
+        <div class="modal-header flex justify-between items-center">
+            <p class="modal-title text-lg  opacity-8"><span class="font-medium">Complaint No:</span> 1213010318313</p>
+            <i onclick="disable_modal('modal_id')" class="fas fa-xmark rounded bg-[#343A40] text-white cursor-pointer shadow flex justify-center items-center h-[30px] w-[30px]"></i>
+        </div>
+        <div class="modal-body"></div>
+        <div class="modal-footer"></div>
     </div>
 
 
@@ -120,6 +129,14 @@
      $(function(){
       $("#police_station").selectize();
      }); 
+
+     function disable_modal(modal_id){
+        document.getElementById(modal_id).classList.add('hidden')
+     }
+
+     function enable_modal(modal_id){
+        document.getElementById(modal_id).classList.remove('hidden');
+     }
     </script>
     
 
