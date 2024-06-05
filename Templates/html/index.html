@@ -15,7 +15,7 @@
 </head>
 <body class="bg-[#494F55]">
 
-    <header class="bg-[#343A40] h-20">
+    <header id="header" class="bg-[#343A40] h-20">
         <nav class="flex justify-between w-[90%] m-auto max-w-[1600px] h-[100%] items-center">
             <div class="left-nav">
                 <div class="logo">
@@ -34,7 +34,7 @@
         </nav>
     </header>
 
-    <div class="container w-[90%] max-w-[1600px] h-[88vh] m-auto flex justify-center items-center">
+    <div id="container" class="container w-[90%] max-w-[1600px] h-[88vh] m-auto flex justify-center items-center">
         <div class="w-full">
 
             <div class=" w-full  p-5 rounded-[8px] bg-[#353a40]   shadow-[#000]   m-auto">
@@ -45,14 +45,14 @@
                 
                 <div class="ml-[20px] mr-[20px] mt-[50px] mb-[50px] flex gap-[8px] *:text-l">
                     <a href="list_complaints.html">
-                        <button class="bg-[#343A40] shadow-[#000000] shadow-sm transition text-white font-semibold p-3 pl-7 block hover:scale-105 rounded-[22px] rounded-r-none">See complaints <i class="fa-solid fa-wallet"></i></button>
+                        <button class="bg-[#343A40] shadow-[#000000] shadow-sm transition text-white font-semibold p-3 pl-7 block hover:scale-105 rounded-[22px] rounded-r-none"><i class="fa-solid fa-wallet"></i> See complaints </button>
 
                     </a>
 
-                    <a href="complaint_form.html">
+                    <div onclick="enable_modal('modal_id')">
                         <button class="bg-[#689095]  text-white font-semibold shadow-[#689095] shadow-sm block p-3 pr-7 hover:scale-105 transition rounded-[22px] rounded-l-none"><i class="fa-solid fa-notes-medical"></i> New complaint</button>
                 
-                    </a>
+                    </div>
 
                 </div>
                 
@@ -60,9 +60,51 @@
         </div>
     </div>  
 
-    <footer class="w-90% m-auto">
+    <div class="modal h-2/4 w-[70%] fixed top-[25%]  p-4 left-[15%] hidden  z-[100] max-w[1400px] shadow-[#000000] shadow-2xl  rounded  bg-[#e4e4e4] " id="modal_id">
+        <div class="modal-header flex justify-between items-center">
+            <p class="modal-title text-lg  opacity-8"><span class="font-medium"></p>
+            <i onclick="disable_modal('modal_id')" class="fas fa-xmark rounded bg-[#343A40] text-white cursor-pointer shadow flex justify-center items-center h-[30px] w-[30px]"></i>
+        </div>
+        <div class="modal-body flex justify-center items-center w-full h-[90%]">
+            <div class="complaint-navigator flex gap-[8px]">
+
+                <a href="complaint_with_ai.html">
+                    <button class="bg-[#dc664e]  text-white font-semibold shadow-[#689095] shadow-sm block p-3 pl-7 hover:scale-105 transition rounded-[22px] rounded-r-none"">
+                        <i class="fas fa-robot"></i> Complaint with AI
+                    </button>
+                </a>
+                
+
+                <a href="complaint_form.html">
+                     <button class="bg-[#515b51] shadow-[#000000] shadow-sm transition text-white font-semibold p-3 pr-7 block hover:scale-105 rounded-[22px] rounded-l-none">
+                        <i class="fas fa-pen-to-square"></i> Complaint manually
+                    </button>
+                </a>
+               
+            </div>
+        </div>
+        <div class="modal-footer"></div>
+    </div>
+
+
+    <footer id="footer" class="w-90% m-auto">
         <p class="text-white text-center font-semibold text-xs opacity-7">Copyright all rights reserved to @github.com/jahir-raihan - 2024</p>
     </footer>
     
+    <script>
+        function disable_modal(modal_id){
+            document.getElementById(modal_id).classList.add('hidden')
+            document.getElementById('header').classList.remove('blur-sm')
+            document.getElementById('container').classList.remove('blur-sm')
+            document.getElementById('footer').classList.remove('blur-sm')
+        }
+
+        function enable_modal(modal_id){
+            document.getElementById(modal_id).classList.remove('hidden');
+            document.getElementById('header').classList.add('blur-sm')
+            document.getElementById('container').classList.add('blur-sm')
+            document.getElementById('footer').classList.add('blur-sm')
+        }
+    </script>
 </body>
 </html>
