@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload with Preview and Modal</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* styles.css */
+body {
+    font-family: Arial, sans-serif;
+}
+
+form {
+    margin: 20px;
+}
+
+#fileInput {
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    position: relative;
+    margin: 15% auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 600px;
+    background-color: white;
+    border-radius: 8px;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#previewContainer img, #previewContainer video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: auto;
+}
+
+    </style>
+</head>
+<body>
+    <!-- Form with File Input -->
+    <form id="uploadForm" method="POST" enctype="multipart/form-data" action="upload_endpoint">
+        <input type="file" id="fileInput" name="file" accept="image/*,video/*">
+        <button type="submit">Upload</button>
+    </form>
+
+    <!-- Modal -->
+    <div id="previewModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="previewContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        // scripts.js
+document.addEventListener("DOMContentLoaded", function() {
+    const fileInput = document.getElementById('fileInput');
+    const previewModal = document.getElementById('previewModal');
+    const closeModal = document.getElementsByClassName('close')[0];
+    const previewContainer = document.getElementById('previewContainer');
+
+    fileInput.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const fileURL = URL.createObjectURL(file);
+            previewContainer.innerHTML = ''; // Clear previous content
+
+            // Check the file type
+            if (file.type.startsWith('image/')) {
+                const img = document.createElement('img');
+                img.src = fileURL;
+                previewContainer.appendChild(img);
+            } else if (file.type.startsWith('video/')) {
+                const video = document.createElement('video');
+                video.src = fileURL;
+                video.controls = true;
+                previewContainer.appendChild(video);
+            }
+
+            // Display the modal
+            previewModal.style.display = 'block';
+        }
+    });
+
+    closeModal.onclick = function() {
+        previewModal.style.display = 'none';
+        previewContainer.innerHTML = ''; // Clear the preview
+    };
+
+    window.onclick = function(event) {
+        if (event.target === previewModal) {
+            previewModal.style.display = 'none';
+            previewContainer.innerHTML = ''; // Clear the preview
+        }
+    };
+});
+
+    </script>
+</body>
+</html>

@@ -4,73 +4,148 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Complaint options | Choose complaint options</title>
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-        crossorigin="anonymous"
-        referrerpolicy="no-referrer"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../css/output.css">
+    <link rel="stylesheet" href="../css/raw_css.css">
 </head>
 <body class="bg-[#494F55]">
-
-    <header class="bg-[#343A40] h-20">
+    <header id="header" class="bg-[#343A40] h-20">
         <nav class="flex justify-between w-[90%] m-auto max-w-[1600px] h-[100%] items-center">
             <div class="left-nav">
                 <div class="logo">
-                    <p class="font-medium text-white text-2xl" >Traffic <span class="text-red-400">Complaint</span></p>
+                    <p class="font-medium text-white text-2xl">Traffic <span class="text-red-400">Complaint</span></p>
                 </div>
             </div>
-
             <div class="right-nav">
-            
                 <div class="nav-menus *:ml-4 *:cursor-pointer">
                     <i class="fas fa-circle-info text-white text-2xl"></i>
                     <i class="fas fa-sign-in text-white text-2xl"></i>
                 </div>
             </div>
-
         </nav>
     </header>
-
-    <div class="container w-[90%] max-w-[1600px] h-[88vh] m-auto flex justify-center items-center">
-        
+    <div id="container" class="container w-[90%] max-w-[1600px] h-[88vh] m-auto flex justify-center items-center">
         <div class="w-full h-fit">
-
-
-            <div class=" w-full  p-5 rounded-[8px] bg-[#353a40]   shadow-[#000]   m-auto">
-                <h1 class="text-xl text-[white] font-noraml text-center">Start an <b>"AI"</b> Complaint By </h1>
-
-                <div class="w-full flex flex-col  items-center justify-center my-6 gap-[8px] sm:flex-row">
+            <div class="w-full p-5 rounded-[8px] bg-[#353a40] shadow-[#000] m-auto">
+                <h1 class="text-xl text-[white] font-normal text-center">Start an <b>"AI"</b> Complaint By </h1>
+                <div class="w-full flex flex-col items-center justify-center my-6 gap-[8px] sm:flex-row">
                     <button class="bg-[#528a7d] relative w-full cursor-pointer sm:w-[220px] shadow-[#00000094] shadow-sm transition text-white font-semibold p-3 sm:pl-7 block hover:scale-105 rounded-[8px] sm:rounded-r-none">
-                       <i class="fa-solid fa-image"></i> Uploading Image 
-                       <input type="file" title="" class=" h-full w-full cursor-pointer absolute left-0 opacity-0" id="complaint-image" accept="file_extension|.jpg,.png,.jpeg">
+                        <i class="fa-solid fa-image"></i> Uploading Image
+                        <input type="file" style="cursor:pointer !important" title="" class="h-full top-0 w-full cursor-pointer absolute left-0 opacity-0" id="complaint-image" accept="image/*">
                     </button>
                     <button class="bg-[#4e7280] cursor-pointer relative w-full sm:w-[220px] text-white font-semibold shadow-[#00000094] shadow-sm block p-3 sm:pr-7 hover:scale-105 transition rounded-[8px] sm:rounded-l-none">
                         <i class="fa-solid fa-file-video"></i> Uploading Video
-                        <input type="file" title="" class=" h-full cursor-pointer w-full absolute left-0 opacity-0" id="complaint-video" accept="video/mp4,video/mkv, video/x-m4v,video/*">
+                        <input type="file" title="" style="cursor:pointer !important" class="h-full top-0 cursor-pointer w-full absolute left-0 opacity-0" id="complaint-video" accept="video/mp4,video/mkv,video/x-m4v,video/*">
                     </button>
-                
                 </div>
-
-               
-            </div> 
+            </div>
             <div class="w-full flex justify-center items-center my-3">
                 <button onclick="history.back()" class="bg-white rounded py-2 px-2 w-[100px] my-2 mb-6">
-                    <i class="fas fa-arrow-left"></i>
-                    Back
+                    <i class="fas fa-arrow-left"></i> Back
                 </button>
             </div>
-            
-
-           
         </div>
-    </div>  
+    </div>
+    <div class="modal h-3/4 w-[70%]  fixed top-[7.5em] p-4 left-[15%] z-[100] max-w[1400px] shadow-[#000000] shadow-2xl rounded bg-white " id="modal_id">
+        <div class="modal-header flex justify-between items-center">
+            <p class="modal-title text-lg opacity-8"><span class="font-medium"></span></p>
+            <i onclick="disable_modal('modal_id')" class="fas fa-xmark rounded bg-[#343A40] text-white cursor-pointer shadow flex justify-center items-center h-[30px] w-[30px]"></i>
+        </div>
+        <div class="modal-body" id="modal-body">
+            <!-- <div class="computer-chat">
+                <img src="../images/bus-road-dhaka-front-notre-dame-college-bus-road-dhaka-front-notre-dame-college-168316658.webp" alt="">
+                <p class="message">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Earum quisquam, architecto nostrum tenetur amet officia error dolores quis dicta tempore?</p>
+            </div>
+            <div class="human-chat">
+                <div></div>
+                <p class="message">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Earum quisquam, architecto nostrum tenetur amet officia error dolores quis dicta tempore?</p>
+            </div> -->
+        </div>
+        <div class="modal-footer absolute bottom-0">
+            <div class="p-2">
+                <div class="attach relative">
+                    <button class="bg-[#343A40] text-white py-3 px-5 h-[50px] rounded-[6px]">
+                        <i class="fas fa-paperclip"></i>
+                    </button>
+                    <div class="attach-popup bg-[#516f7a] shadow-[#000000] shadow-md absolute top-[-107px] p-3 left-0 rounded-[8px]">
+                        <!-- Image Upload Button -->
+                        <label for="complaint-image" class="relative w-full sm:w-[200px]  transition text-white font-normal tracking-wide p-2  block hover:bg-[#343A40] rounded-[4px]  cursor-pointer">
+                            <i class="fa-solid fa-image w-[20px]"></i> Upload Image
+                        </label>
+                        <input type="file" id="complaint-image" accept="image/*" style="display: none;">
 
-    <footer class="w-90% m-auto">
+                        <!-- Video Upload Button -->
+                        <label for="complaint-video" class="relative w-full sm:w-[200px] text-white font-normal tracking-wide block p-2  hover:bg-[#343A40] transition rounded-[4px]  cursor-pointer">
+                            <i class="fa-solid fa-file-video w-[20px]"></i> Upload Video
+                        </label>
+                        <input type="file" id="complaint-video" accept="video/mp4,video/mkv,video/x-m4v,video/*" style="display: none;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer id="footer" class="w-90% m-auto">
         <p class="text-white text-center font-semibold text-xs opacity-7">Copyright all rights reserved to @github.com/jahir-raihan - 2024</p>
     </footer>
-    
+    <script>
+        // JavaScript for handling file preview and modal display
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const imageInput = document.getElementById('complaint-image');
+            const videoInput = document.getElementById('complaint-video');
+            const modal = document.getElementById('modal_id');
+            const modalBody = document.getElementById('modal-body');
+
+            function handleFileInput(file, type) {
+                if (file) {
+                    const fileURL = URL.createObjectURL(file);
+                    modalBody.innerHTML = ''; // Clear previous content
+
+                    // Create and append the appropriate element (image or video)
+                    if (type === 'image') {
+                        const img = document.createElement('img');
+                        img.src = fileURL;
+                        img.classList.add('w-full', 'h-auto'); // Responsive styling for image
+                        modalBody.appendChild(img);
+                    } else if (type === 'video') {
+                        const video = document.createElement('video');
+                        video.src = fileURL;
+                        video.controls = true;
+                        video.classList.add('w-full', 'h-auto'); // Responsive styling for video
+                        modalBody.appendChild(video);
+                    }
+
+                    enable_modal('modal_id'); // Show the modal
+                }
+            }
+
+            imageInput.addEventListener('change', function(event) {
+                videoInput.value = ''; // Clear the video input if an image is selected
+                handleFileInput(event.target.files[0], 'image');
+            });
+
+            videoInput.addEventListener('change', function(event) {
+                imageInput.value = ''; // Clear the image input if a video is selected
+                handleFileInput(event.target.files[0], 'video');
+            });
+        });
+
+        function disable_modal(modal_id){
+            document.getElementById(modal_id).classList.add('hidden')
+            document.getElementById('header').classList.remove('blur-sm')
+            document.getElementById('container').classList.remove('blur-sm')
+            document.getElementById('footer').classList.remove('blur-sm')
+            document.getElementById('complaint-image').value = '';
+            document.getElementById('complaint-video').value = '';
+            document.getElementById('modal-body').innerHTML = ''
+        }
+
+        function enable_modal(modal_id){
+            document.getElementById(modal_id).classList.remove('hidden');
+            document.getElementById('header').classList.add('blur-sm')
+            document.getElementById('container').classList.add('blur-sm')
+            document.getElementById('footer').classList.add('blur-sm')
+        }
+    </script>
 </body>
 </html>
