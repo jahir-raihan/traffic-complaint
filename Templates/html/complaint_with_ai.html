@@ -61,25 +61,39 @@
                 <p class="message">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Earum quisquam, architecto nostrum tenetur amet officia error dolores quis dicta tempore?</p>
             </div> -->
         </div>
-        <div class="modal-footer absolute bottom-0">
-            <div class="p-2">
-                <div class="attach relative">
-                    <button class="bg-[#343A40] text-white py-3 px-5 h-[50px] rounded-[6px]">
+        <div class="modal-footer absolute bottom-0 p-2 left-0 w-full flex justify-center  items-center">
+            <div class="p-2 flex w-full ">
+                <div class="attach relative bg-[#343A40] hover:bg-[#626e79] rounded-r-none rounded-[8px] ">
+                    <button class=" text-white py-3 px-5 h-[50px] " onclick="toggle_attach_popup()">
                         <i class="fas fa-paperclip"></i>
                     </button>
-                    <div class="attach-popup bg-[#516f7a] shadow-[#000000] shadow-md absolute top-[-107px] p-3 left-0 rounded-[8px]">
+                    <div class="attach-popup bg-[#626e79] shadow-[#000000] shadow-sm absolute top-[-107px] p-3 left-0 rounded-[8px] hidden" id="attach-popup">
                         <!-- Image Upload Button -->
-                        <label for="complaint-image" class="relative w-full sm:w-[200px]  transition text-white font-normal tracking-wide p-2  block hover:bg-[#343A40] rounded-[4px]  cursor-pointer">
+                        <label for="complaint-image" class="relative  sm:w-[150px]  transition text-white font-normal tracking-wide p-2  block hover:bg-[#343A40] rounded-[4px]  cursor-pointer">
                             <i class="fa-solid fa-image w-[20px]"></i> Upload Image
                         </label>
                         <input type="file" id="complaint-image" accept="image/*" style="display: none;">
 
                         <!-- Video Upload Button -->
-                        <label for="complaint-video" class="relative w-full sm:w-[200px] text-white font-normal tracking-wide block p-2  hover:bg-[#343A40] transition rounded-[4px]  cursor-pointer">
+                        <label for="complaint-video" class="relative  sm:w-[150px] text-white font-normal tracking-wide block p-2  hover:bg-[#343A40] transition rounded-[4px]  cursor-pointer">
                             <i class="fa-solid fa-file-video w-[20px]"></i> Upload Video
                         </label>
                         <input type="file" id="complaint-video" accept="video/mp4,video/mkv,video/x-m4v,video/*" style="display: none;">
                     </div>
+                </div>
+                <div class="w-[75%]">
+                    <input type="text" class="h-[50px] border border-l-0 border-[#00000052] outline-none px-4 rounded-r-none   rounded-l-none rounded-[8px] w-full" placeholder="Chat with Gemini . . .">
+                </div>
+                <div class="attach relative hover:bg-[#626e79] bg-[#343A40] rounded-l-none rounded-[8px]">
+                    <button class=" text-white py-3 px-5 h-[50px] flex justify-center items-center ">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+
+                <div class="attach ml-4 relative hover:bg-[#626e79] bg-[#343A40] w-[20%] rounded-[8px]">
+                    <button class=" text-white py-3 px-5 h-[50px] flex justify-center items-center gap-[.5em] w-full">
+                        <i class="fas fa-cloud-arrow-up"></i> Submit
+                    </button>
                 </div>
             </div>
         </div>
@@ -145,6 +159,11 @@
             document.getElementById('header').classList.add('blur-sm')
             document.getElementById('container').classList.add('blur-sm')
             document.getElementById('footer').classList.add('blur-sm')
+        }
+
+        function toggle_attach_popup(){
+
+            document.getElementById('attach-popup').classList.toggle('hidden')
         }
     </script>
 </body>
