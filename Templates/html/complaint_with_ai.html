@@ -46,20 +46,41 @@
             </div>
         </div>
     </div>
-    <div class="modal h-3/4 w-[70%]  fixed top-[7.5em] p-4 left-[15%] z-[100] max-w[1400px] shadow-[#000000] shadow-2xl rounded bg-white " id="modal_id">
+    <div class="modal h-3/4 w-[70%] bg-[#f1f1f1] fixed top-[7.5em] p-4 left-[15%] z-[100] max-w[1400px] shadow-[#000000] shadow-2xl rounded  " id="modal_id">
         <div class="modal-header flex justify-between items-center">
             <p class="modal-title text-lg opacity-8"><span class="font-medium"></span></p>
             <i onclick="disable_modal('modal_id')" class="fas fa-xmark rounded bg-[#343A40] text-white cursor-pointer shadow flex justify-center items-center h-[30px] w-[30px]"></i>
         </div>
-        <div class="modal-body" id="modal-body">
-            <!-- <div class="computer-chat">
-                <img src="../images/bus-road-dhaka-front-notre-dame-college-bus-road-dhaka-front-notre-dame-college-168316658.webp" alt="">
-                <p class="message">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Earum quisquam, architecto nostrum tenetur amet officia error dolores quis dicta tempore?</p>
-            </div>
-            <div class="human-chat">
+        <div class="modal-body mt-5 h-[82%]  border-2 shadow-inner shadow-slate-300 overflow-y-scroll p-2" id="modal-body">
+            <div class="human-chat flex justify-between">
+                
                 <div></div>
-                <p class="message">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Earum quisquam, architecto nostrum tenetur amet officia error dolores quis dicta tempore?</p>
-            </div> -->
+                <img class="w-[300px] rounded shadow-xl" src="../images/bus-road-dhaka-front-notre-dame-college-bus-road-dhaka-front-notre-dame-college-168316658.webp" alt="">
+            </div>
+            <div class="computer-chat my-4 w-[70%]">
+                
+                <div class="message flex  gap-[8px]">
+                    <div class="  flex  justify-center items-center h-fit rounded-[50%] p-3 py-[14px] shadow-2xl bg-slate-600 border ">
+                        <i class="fas fa-robot text-white"></i>
+                        
+                    </div>
+                    <div class="message-tex tracking-wider text-gray-600 drop-shadow-md">
+                        Lorem, ipsum dolor sit amet Lorem, ipsum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus porro reiciendis molestiae fugiat numquam molestias laudantium soluta ducimus, impedit eligendi cupiditate deserunt culpa maiores blanditiis animi exercitationem accusantium? Quam ut ratione mollitia amet tenetur quae sed saepe, doloribus laudantium accusamus. Architecto fugit possimus ipsam? Beatae, reprehenderit veniam? Suscipit, alias nisi. consectetur adipisicing elit. Ipsum impedit quos fugiat minus autem modi veritatis corrupti illo blanditiis, voluptatibus iusto in molestiae accusantium alias recusandae odit ducimus incidunt cumque!
+                    </div>
+                </div>
+            </div>
+            <div class="human-chat ">
+
+                <div class="message flex  gap-[8px] flex-row-reverse ">
+                    <div class="  flex  justify-center items-center h-fit rounded-[50%] p-4 py-[15px] shadow-2xl bg-slate-600 border ">
+                        <i class="fas fa-user text-white"></i>
+                        
+                    </div>
+                    <div class="message-tex tracking-wider text-gray-600 drop-shadow-md w-[60%]">
+                        Lorem, ipsum dolor sit amet Lorem, ipsum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus porro reiciendis molestiae fugiat numquam molestias laudantium soluta ducimus, impedit eligendi cupiditate deserunt culpa maiores blanditiis animi exercitationem accusantium? Quam ut ratione mollitia amet tenetur quae sed saepe, doloribus laudantium accusamus. Architecto fugit possimus ipsam? Beatae, reprehenderit veniam? Suscipit, alias nisi. consectetur adipisicing elit. Ipsum impedit quos fugiat minus autem modi veritatis corrupti illo blanditiis, voluptatibus iusto in molestiae accusantium alias recusandae odit ducimus incidunt cumque!
+                    </div>
+                </div>
+            </div>
             
         </div>
         <div class="modal-footer absolute bottom-0 p-2 left-0 w-full flex justify-center  items-center">
