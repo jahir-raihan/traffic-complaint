@@ -122,11 +122,25 @@
                         <input type="file" id="complaint-video" accept="video/mp4,video/mkv,video/x-m4v,video/*" style="display: none;">
                     </div>
 
-                    <div class="image-preview">
-                        
+                    <div class="image-preview hidden h-[100%] absolute bottom-0 bg-[#343A40] ">
+                        <div>
+                            <i class="fas fa-xmark"></i>
+                        </div>
+                        <div>
+                            <img class="w-[50%]" src="../images/bus-road-dhaka-front-notre-dame-college-bus-road-dhaka-front-notre-dame-college-168316658.webp" alt="">
+                            <label for="complaint-image-temp" class="relative  sm:w-[150px]  transition text-white font-normal tracking-wide p-2  block hover:bg-[#343A40] rounded-[4px]  cursor-pointer">
+                                <i class="fa-solid fa-image w-[20px]"></i> Upload Image
+                            </label>
+                            <input type="file" id="complaint-image-temp" accept="image/*" style="display: none;">
+                        </div>
                     </div>
+                        
                 </div>
+
                 <div class="w-[75%]">
+
+                    
+
                     <input type="text" class="h-[50px] border border-l-0 border-[#00000052] outline-none px-4 rounded-r-none   rounded-l-none rounded-[8px] w-full" placeholder="Chat with Gemini . . .">
                 </div>
                 <div class="attach relative hover:bg-[#626e79] bg-[#343A40] rounded-l-none rounded-[8px]">
