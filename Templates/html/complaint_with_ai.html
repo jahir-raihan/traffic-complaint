@@ -104,8 +104,8 @@
         </div>
         <div class="modal-footer absolute bottom-0 p-2 left-0 w-full flex justify-center  items-center">
             <div class="p-2 flex w-full ">
-                <div class="attach relative bg-[#343A40] hover:bg-[#626e79] rounded-r-none rounded-[8px] ">
-                    <button class=" text-white py-3 px-5 h-[50px] " onclick="toggle_attach_popup()">
+                <div class="attach relative bg-[#343A40]  rounded-r-none rounded-[8px] ">
+                    <button class="hover:bg-[#626e79] rounded-[8px] rounded-r-none text-white py-3 px-5 h-[50px] " onclick="toggle_attach_popup()">
                         <i class="fas fa-paperclip"></i>
                     </button>
                     <div class="attach-popup bg-[#626e79] shadow-[#000000] shadow-sm absolute top-[-107px] p-3 left-0 rounded-[8px] hidden" id="attach-popup">
@@ -122,24 +122,23 @@
                         <input type="file" id="complaint-video" accept="video/mp4,video/mkv,video/x-m4v,video/*" style="display: none;">
                     </div>
 
-                    <div class="image-preview hidden h-[100%] absolute bottom-0 bg-[#343A40] ">
-                        <div>
-                            <i class="fas fa-xmark"></i>
+                    <div class="image-preview w-[250px] rounded-[4px] rounded-b-none shadow-xl absolute bottom-[50px] left-[55px] p-4 bg-[#6f757b] ">
+                        <div class="flex justify-end mb-3">
+                            <i class="fas fa-xmark text-white cursor-pointer"></i>
                         </div>
-                        <div>
-                            <img class="w-[50%]" src="../images/bus-road-dhaka-front-notre-dame-college-bus-road-dhaka-front-notre-dame-college-168316658.webp" alt="">
-                            <label for="complaint-image-temp" class="relative  sm:w-[150px]  transition text-white font-normal tracking-wide p-2  block hover:bg-[#343A40] rounded-[4px]  cursor-pointer">
-                                <i class="fa-solid fa-image w-[20px]"></i> Upload Image
+                        <div class="flex w-full justify-between items-center gap-[1em]">
+                            <img class="h-[100px] hidden " src="../images/bus-road-dhaka-front-notre-dame-college-bus-road-dhaka-front-notre-dame-college-168316658.webp" id="preview-image" alt="">
+                            <video src="" class="hidden" id="preview-video"></video>
+                            <label for="complaint-image" class="relative  transition text-white font-normal tracking-wide   block  rounded-[4px]  cursor-pointer">
+                                <i class="fas fa-notes-medical text-2xl"></i> 
                             </label>
-                            <input type="file" id="complaint-image-temp" accept="image/*" style="display: none;">
+                            <input type="file" id="complaint-image" accept="image/*" style="display: none;">
                         </div>
                     </div>
                         
                 </div>
 
                 <div class="w-[75%]">
-
-                    
 
                     <input type="text" class="h-[50px] border border-l-0 border-[#00000052] outline-none px-4 rounded-r-none   rounded-l-none rounded-[8px] w-full" placeholder="Chat with Gemini . . .">
                 </div>
@@ -163,6 +162,8 @@
     <script>
         // JavaScript for handling file preview and modal display
 
+        let current_file;
+
         document.addEventListener("DOMContentLoaded", () => {
             const imageInput = document.getElementById('complaint-image');
             const videoInput = document.getElementById('complaint-video');
@@ -171,21 +172,22 @@
 
             function handleFileInput(file, type) {
                 if (file) {
+                    current_file = file;
                     const fileURL = URL.createObjectURL(file);
-                    modalBody.innerHTML = ''; // Clear previous content
+                    
 
                     // Create and append the appropriate element (image or video)
                     if (type === 'image') {
-                        const img = document.createElement('img');
+                        const img = document.getElementById('preview-image');
+                        img.classList.remove('hidden')
                         img.src = fileURL;
-                        img.classList.add('w-full', 'h-auto'); // Responsive styling for image
-                        modalBody.appendChild(img);
+                        
                     } else if (type === 'video') {
-                        const video = document.createElement('video');
+                        const video = document.getElementById('preview-video');
+                        video.classList.remove('hidden')
                         video.src = fileURL;
                         video.controls = true;
-                        video.classList.add('w-full', 'h-auto'); // Responsive styling for video
-                        modalBody.appendChild(video);
+                       
                     }
 
                     enable_modal('modal_id'); // Show the modal
@@ -194,11 +196,13 @@
 
             imageInput.addEventListener('change', function(event) {
                 videoInput.value = ''; // Clear the video input if an image is selected
+                videoInput.classList.add('hidden')
                 handleFileInput(event.target.files[0], 'image');
             });
 
             videoInput.addEventListener('change', function(event) {
                 imageInput.value = ''; // Clear the image input if a video is selected
+                imageInput.classList.add('hidden')
                 handleFileInput(event.target.files[0], 'video');
             });
         });
@@ -210,7 +214,7 @@
             document.getElementById('footer').classList.remove('blur-sm')
             document.getElementById('complaint-image').value = '';
             document.getElementById('complaint-video').value = '';
-            document.getElementById('modal-body').innerHTML = ''
+            //document.getElementById('modal-body').innerHTML = ''
         }
 
         function enable_modal(modal_id){
@@ -221,8 +225,13 @@
         }
 
         function toggle_attach_popup(){
+            
+            let popup_classList = document.getElementById('attach-popup').classList
+            
+            popup_classList.toggle('hidden')
+            if ( !popup_classList.contains('hidden')){
 
-            document.getElementById('attach-popup').classList.toggle('hidden')
+            }
         }
     </script>
 </body>
