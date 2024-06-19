@@ -140,13 +140,17 @@
 
                 <div class="w-[75%]">
 
-                    <input type="text" class="h-[50px] border border-l-0 border-[#00000052] outline-none px-4 rounded-r-none   rounded-l-none rounded-[8px] w-full" placeholder="Chat with Gemini . . .">
+                    <input type="text" id="chat-text" class="h-[50px] border border-l-0 border-[#00000052] outline-none px-4 rounded-r-none   rounded-l-none rounded-[8px] w-full" placeholder="Chat with Gemini . . .">
                 </div>
+
                 <div class="attach relative hover:bg-[#626e79] bg-[#343A40] rounded-l-none rounded-[8px]">
-                    <button class=" text-white py-3 px-5 h-[50px] flex justify-center items-center ">
+                    <button  class=" text-white py-3 px-5 h-[50px] flex justify-center items-center" onclick="submitCurrentChat()" >
                         <i class="fas fa-paper-plane"></i>
                     </button>
                 </div>
+                
+                
+                
 
                 <div class="attach ml-4 relative hover:bg-[#626e79] bg-[#343A40] w-[20%] rounded-[8px]">
                     <button class=" text-white py-3 px-5 h-[50px] flex justify-center items-center gap-[.5em] w-full">
@@ -258,6 +262,77 @@
 
             current_file = null
         }
+        
+
+        // Select the input field
+        const chatInput = document.getElementById('chat-text');
+
+        // Add event listener for 'keydown' event
+        chatInput.addEventListener('keydown', function(event) {
+            // Check if the Enter key (key code 13) is pressed
+            if (event.key === "Enter") {
+                // Call the submitCurrentChat function
+                submitCurrentChat();
+            }
+        });
+
+        function submitCurrentChat(){
+            
+            let text = document.getElementById('chat-text')
+            let modal_body = document.getElementById('modal-body')
+
+            if (text.value.trim().length > 0){
+                let image_url = null;
+
+                if (current_file){
+                    let image_url =  URL.createObjectURL(current_file);
+                }
+                
+                let template_node = get_human_chat_template(text.value.trim(), image_url)
+                modal_body.appendChild(template_node)
+            }
+            text.value = ''
+
+
+        }
+
+        function get_human_chat_template(text, image_url){
+
+            // Create a div of human template then insert all chatted data of user to render
+
+            let template = `
+                <div class="chat-obj max-w-[60%] shadow border-2 border-[#494949] bg-[#494F55] p-4 rounded-[24px]  "> 
+            `
+
+            let div_element = document.createElement('div')
+            div_element.classList.add('human-chat')
+            div_element.classList.add('my-4')
+            div_element.classList.add('flex')
+            div_element.classList.add('justify-end')
+            
+
+            if (image_url){
+                template += `
+                <div class="0 flex  mb-2  justify-end">
+                    <img class="w-[280px] rounded-[4px] block" src="${image_url}" alt="">
+                
+                </div>
+                
+                `
+            }
+            template += `
+                    <p class="message-text text-right text-white  opacity-80">
+                       ${text}
+                    </p>
+                </div>
+                <div class="w-[40px] h-[40px] bg-[#494F55] rounded-[50%] flex justify-center items-center ml-1">
+                    <i class="fas fa-user text-white"></i>
+                </div>
+            `
+            div_element.innerHTML = template
+            return div_element
+        }
+    
     </script>
 </body>
 </html>
