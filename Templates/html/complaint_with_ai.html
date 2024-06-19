@@ -51,11 +51,11 @@
             <p class="modal-title text-lg opacity-8"><span class="font-medium"></span></p>
             <i onclick="disable_modal('modal_id')" class="fas fa-xmark rounded bg-[#343A40] text-white cursor-pointer shadow flex justify-center items-center h-[30px] w-[30px]"></i>
         </div>
-        <div class="modal-body mt-5 h-[82%] rounded-[4px]  border-2 shadow-inner shadow-slate-300 overflow-y-scroll p-2" id="modal-body">
+        <div class="modal-body mt-5 h-[82%]     border-t-2 overflow-y-scroll p-2" id="modal-body">
             
-            <div class="human-chat  my-4 flex justify-end">
+            <div class="human-chat my-4 flex justify-end">
 
-                <div class="chat-obj w-[60%]  bg-[#494F55] p-4 rounded-[24px]  ">
+                <div class="chat-obj w-[60%] shadow border-2 border-[#494949] bg-[#494F55] p-4 rounded-[24px]  ">
 
                     <div class="0 flex  mb-2  justify-end">
                          <img class="w-[280px] rounded-[4px] block" src="../images/bus-road-dhaka-front-notre-dame-college-bus-road-dhaka-front-notre-dame-college-168316658.webp" alt="">
@@ -88,7 +88,7 @@
 
             <div class="human-chat  mb-4 flex justify-end">
 
-                <div class="chat-obj w-[60%]  bg-[#494F55] p-4 rounded-[24px]  ">
+                <div class="chat-obj w-[60%] shadow  bg-[#494F55] p-4 rounded-[24px]  ">
 
                     
                    
@@ -122,13 +122,13 @@
                         <input type="file" id="complaint-video" accept="video/mp4,video/mkv,video/x-m4v,video/*" style="display: none;">
                     </div>
 
-                    <div class="image-preview w-[250px] rounded-[4px] rounded-b-none shadow-xl absolute bottom-[50px] left-[55px] p-4 bg-[#6f757b] ">
+                    <div id="preview" class="image-preview w-[250px] rounded-[4px] rounded-b-none shadow-xl absolute bottom-[50px] left-[55px] p-4 bg-[#6f757b] hidden">
                         <div class="flex justify-end mb-3">
-                            <i class="fas fa-xmark text-white cursor-pointer"></i>
+                            <i class="fas fa-xmark text-white cursor-pointer" onclick="close_preview()"></i>
                         </div>
                         <div class="flex w-full justify-between items-center gap-[1em]">
-                            <img class="h-[100px] hidden " src="../images/bus-road-dhaka-front-notre-dame-college-bus-road-dhaka-front-notre-dame-college-168316658.webp" id="preview-image" alt="">
-                            <video src="" class="hidden" id="preview-video"></video>
+                            <img class="h-[100px] hidden" src="../images/bus-road-dhaka-front-notre-dame-college-bus-road-dhaka-front-notre-dame-college-168316658.webp" id="preview-image" alt="">
+                            <video src="" class="hidden h-[100px]" id="preview-video"></video>
                             <label for="complaint-image" class="relative  transition text-white font-normal tracking-wide   block  rounded-[4px]  cursor-pointer">
                                 <i class="fas fa-notes-medical text-2xl"></i> 
                             </label>
@@ -169,6 +169,8 @@
             const videoInput = document.getElementById('complaint-video');
             const modal = document.getElementById('modal_id');
             const modalBody = document.getElementById('modal-body');
+            const preview = document.getElementById('preview')
+            const attach_popup = document.getElementById('attach-popup')
 
             function handleFileInput(file, type) {
                 if (file) {
@@ -181,14 +183,20 @@
                         const img = document.getElementById('preview-image');
                         img.classList.remove('hidden')
                         img.src = fileURL;
+                        preview.classList.remove('hidden')
+                        attach_popup.classList.add('hidden')
                         
                     } else if (type === 'video') {
                         const video = document.getElementById('preview-video');
                         video.classList.remove('hidden')
                         video.src = fileURL;
                         video.controls = true;
+                        preview.classList.remove('hidden')
+                        attach_popup.classList.add('hidden')
                        
                     }
+
+                    
 
                     enable_modal('modal_id'); // Show the modal
                 }
@@ -232,6 +240,23 @@
             if ( !popup_classList.contains('hidden')){
 
             }
+        }
+
+        function close_preview(){
+            const preview = document.getElementById('preview')
+            preview.classList.add('hidden')
+
+            const imageInput = document.getElementById('complaint-image');
+            const videoInput = document.getElementById('complaint-video');
+            videoInput.value = ''
+            imageInput.value = ''
+
+            const img = document.getElementById('preview-image');
+            const video = document.getElementById('preview-video');
+            img.src = ''
+            video.src = ''
+
+            current_file = null
         }
     </script>
 </body>
