@@ -140,7 +140,7 @@
 
                 <div class="w-[75%]">
 
-                    <input type="text" id="chat-text" class="h-[50px] border border-l-0 border-[#00000052] outline-none px-4 rounded-r-none   rounded-l-none rounded-[8px] w-full" placeholder="Chat with Gemini . . .">
+                    <input type="text" autocomplete="off" id="chat-text" class="h-[50px] border border-l-0 border-[#00000052] outline-none px-4 rounded-r-none   rounded-l-none rounded-[8px] w-full" placeholder="Chat with Gemini . . .">
                 </div>
 
                 <div class="attach relative hover:bg-[#626e79] bg-[#343A40] rounded-l-none rounded-[8px]">
@@ -175,6 +175,8 @@
             const modalBody = document.getElementById('modal-body');
             const preview = document.getElementById('preview')
             const attach_popup = document.getElementById('attach-popup')
+            const img = document.getElementById('preview-image');
+            const video = document.getElementById('preview-video');
 
             function handleFileInput(file, type) {
                 if (file) {
@@ -208,13 +210,15 @@
 
             imageInput.addEventListener('change', function(event) {
                 videoInput.value = ''; // Clear the video input if an image is selected
-                videoInput.classList.add('hidden')
+                video.src = ''
+                video.classList.add('hidden')
                 handleFileInput(event.target.files[0], 'image');
             });
 
             videoInput.addEventListener('change', function(event) {
                 imageInput.value = ''; // Clear the image input if a video is selected
-                imageInput.classList.add('hidden')
+                img.src = ''
+                img.classList.add('hidden')
                 handleFileInput(event.target.files[0], 'video');
             });
         });
@@ -227,6 +231,9 @@
             document.getElementById('complaint-image').value = '';
             document.getElementById('complaint-video').value = '';
             //document.getElementById('modal-body').innerHTML = ''
+            close_preview()
+            current_file = null
+            document.getElementById('modal-body').innerHTML = ''
         }
 
         function enable_modal(modal_id){
@@ -282,21 +289,31 @@
             let modal_body = document.getElementById('modal-body')
 
             if (text.value.trim().length > 0){
-                let image_url = null;
+                let file_url = null;
+                
+                let is_video = false
+
+                if (current_file.type.includes('video')){
+                    is_video = true;
+                }
 
                 if (current_file){
-                    let image_url =  URL.createObjectURL(current_file);
+                    file_url =  URL.createObjectURL(current_file);
+                    
                 }
-                
-                let template_node = get_human_chat_template(text.value.trim(), image_url)
+                console.log(is_video, file_url)
+
+                let template_node = get_human_chat_template(text.value.trim(), file_url.trim(), is_video)
                 modal_body.appendChild(template_node)
+                text.value = ''
+                close_preview()
             }
-            text.value = ''
+            
 
 
         }
 
-        function get_human_chat_template(text, image_url){
+        function get_human_chat_template(text, file_url, is_video){
 
             // Create a div of human template then insert all chatted data of user to render
 
@@ -311,14 +328,27 @@
             div_element.classList.add('justify-end')
             
 
-            if (image_url){
-                template += `
-                <div class="0 flex  mb-2  justify-end">
-                    <img class="w-[280px] rounded-[4px] block" src="${image_url}" alt="">
+            if (file_url){
+
+                if (is_video){
+                    template += `
+                        <div class="0 flex  mb-2  justify-end">
+                            <video src="${file_url}" class="hidden h-[100px]" id="preview-video"></video>
+                        
+                        </div>
+                    
+                    `
+
+                } else {
+                    template += `
+                        <div class="0 flex  mb-2  justify-end">
+                            <img class="w-[280px] rounded-[4px] block" src="${file_url}" alt="">
+                        
+                        </div>
+                    
+                    `
+                }
                 
-                </div>
-                
-                `
             }
             template += `
                     <p class="message-text text-right text-white  opacity-80">
