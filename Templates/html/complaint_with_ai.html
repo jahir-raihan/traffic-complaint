@@ -13,7 +13,7 @@
         <nav class="flex justify-between w-[90%] m-auto max-w-[1600px] h-[100%] items-center">
             <div class="left-nav">
                 <div class="logo">
-                    <p class="font-medium text-white text-2xl">Traffic <span class="text-red-400">Complaint</span></p>
+                    <a href="index.html" class="font-medium text-white text-2xl" >Traffic <span class="text-red-400">Complaint</span></a>
                 </div>
             </div>
             <div class="right-nav">
@@ -46,7 +46,7 @@
             </div>
         </div>
     </div>
-    <div class="modal h-3/4 w-[70%] bg-white fixed top-[7.5em] p-4 left-[15%] z-[100] max-w[1400px] shadow-[#000000] shadow-2xl rounded  " id="modal_id">
+    <div class="modal h-3/4 w-[70%] bg-white fixed top-[7.5em] p-4 left-[15%] z-[100] max-w[1400px] shadow-[#000000] shadow-2xl rounded  hidden" id="modal_id">
         <div class="modal-header flex justify-between items-center">
             <p class="modal-title text-lg opacity-8"><span class="font-medium"></span></p>
             <i onclick="disable_modal('modal_id')" class="fas fa-xmark rounded bg-[#343A40] text-white cursor-pointer shadow flex justify-center items-center h-[30px] w-[30px]"></i>
@@ -202,9 +202,8 @@
             let popup_classList = document.getElementById('attach-popup').classList
             
             popup_classList.toggle('hidden')
-            if ( !popup_classList.contains('hidden')){
 
-            }
+            
         }
 
         function close_preview(){
