@@ -74,14 +74,19 @@ input[type="file"]::-webkit-file-upload-button {
 }
 
 
-@media only screen and (max-width:600px){
+@media only screen and (max-width:640px){
     .complaint-card, .profile{
         display: block;
         
     }
+    .profile-right, .profile-left{
+        width:100%;
+        margin:1em 0;
+    }
     .complaint-card-right{
         margin-top:1em;
         text-align: left;
+        
     }
     
 }
