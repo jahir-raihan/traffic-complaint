@@ -903,10 +903,6 @@ video {
   max-width: 60%;
 }
 
-.max-w-\[60\%\'\'\] {
-  max-width: 60%'';
-}
-
 @keyframes spin {
   to {
     transform: rotate(360deg);
