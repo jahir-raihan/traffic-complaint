@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaint options | Choose complaint options</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../css/output.css">
+    <link rel="stylesheet" href="../css/raw_css.css">
+</head>
+<body class="bg-[#494F55]">
+    <header id="header" class="bg-[#343A40] h-20">
+        <nav class="flex justify-between w-[90%] m-auto max-w-[1600px] h-[100%] items-center">
+            <div class="left-nav">
+                <div class="logo">
+                    <a href="index.html" class="font-medium text-white text-2xl" >Traffic <span class="text-red-400">Complaint</span></a>
+                </div>
+            </div>
+            <div class="right-nav">
+                <div class="nav-menus *:ml-4 *:cursor-pointer">
+                    <i class="fas fa-circle-info text-white text-2xl"></i>
+                    <i class="fas fa-sign-in text-white text-2xl"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div id="container" class="container w-[90%] max-w-[1600px] h-[88vh] m-auto flex justify-center items-center">
+        <div class="w-full h-fit">
+            <div class="w-full p-5 rounded-[8px] bg-[#353a40] shadow-[#000] m-auto">
+                <h1 class="text-xl text-[white] font-normal text-center">Start an <b>"AI"</b> Complaint By </h1>
+                <div class="w-full flex flex-col items-center justify-center my-6 gap-[8px] sm:flex-row">
+                    <button class="bg-[#528a7d] relative w-full cursor-pointer sm:w-[220px] shadow-[#00000094] shadow-sm transition text-white font-semibold p-3 sm:pl-7 block hover:scale-105 rounded-[8px] sm:rounded-r-none">
+                        <i class="fa-solid fa-image"></i> Uploading Image
+                        <input type="file" style="cursor:pointer !important" title="" class="h-full top-0 w-full cursor-pointer absolute left-0 opacity-0" id="complaint-image" accept="image/*">
+                    </button>
+                    <button class="bg-[#4e7280] cursor-pointer relative w-full sm:w-[220px] text-white font-semibold shadow-[#00000094] shadow-sm block p-3 sm:pr-7 hover:scale-105 transition rounded-[8px] sm:rounded-l-none">
+                        <i class="fa-solid fa-file-video"></i> Uploading Video
+                        <input type="file" title="" style="cursor:pointer !important" class="h-full top-0 cursor-pointer w-full absolute left-0 opacity-0" id="complaint-video" accept="video/mp4,video/mkv,video/x-m4v,video/*">
+                    </button>
+                </div>
+            </div>
+            <div class="w-full flex justify-center items-center my-3">
+                <button onclick="history.back()" class="bg-white rounded py-2 px-2 w-[100px] my-2 mb-6">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="modal h-3/4 w-[70%] bg-white fixed top-[7.5em] p-4 left-[15%] z-[100] max-w[1400px] shadow-[#000000] shadow-2xl rounded  hidden" id="modal_id">
+        <div class="modal-header flex justify-between items-center">
+            <p class="modal-title text-lg opacity-8"><span class="font-medium"></span></p>
+            <i onclick="disable_modal('modal_id')" class="fas fa-xmark rounded bg-[#343A40] text-white cursor-pointer shadow flex justify-center items-center h-[30px] w-[30px]"></i>
+        </div>
+        <div class="modal-body mt-5 h-[82%]     border-t-2 overflow-y-scroll p-2" id="modal-body">
+            
+         
+            
+        </div>
+        <div class="modal-footer absolute bottom-0 p-2 left-0 w-full flex justify-center  items-center">
+            <div class="p-2 flex w-full ">
+                <div class="attach relative bg-[#343A40]  rounded-r-none rounded-[8px] ">
+                    <button class="hover:bg-[#626e79] rounded-[8px] rounded-r-none text-white py-3 px-5 h-[50px] " onclick="toggle_attach_popup()">
+                        <i class="fas fa-paperclip"></i>
+                    </button>
+                    <div class="attach-popup bg-[#626e79] shadow-[#000000] shadow-sm absolute top-[-107px] p-3 left-0 rounded-[8px] hidden" id="attach-popup">
+                        <!-- Image Upload Button -->
+                        <label for="complaint-image" class="relative  sm:w-[150px]  transition text-white font-normal tracking-wide p-2  block hover:bg-[#343A40] rounded-[4px]  cursor-pointer">
+                            <i class="fa-solid fa-image w-[20px]"></i> Upload Image
+                        </label>
+                        <input type="file" id="complaint-image" accept="image/*" style="display: none;">
+
+                        <!-- Video Upload Button -->
+                        <label for="complaint-video" class="relative  sm:w-[150px] text-white font-normal tracking-wide block p-2  hover:bg-[#343A40] transition rounded-[4px]  cursor-pointer">
+                            <i class="fa-solid fa-file-video w-[20px]"></i> Upload Video
+                        </label>
+                        <input type="file" id="complaint-video" accept="video/mp4,video/mkv,video/x-m4v,video/*" style="display: none;">
+                    </div>
+
+                    <div id="preview" class="image-preview w-[250px] rounded-[4px] rounded-b-none shadow-xl absolute bottom-[50px] left-[55px] p-4 bg-[#6f757b] hidden">
+                        <div class="flex justify-end mb-3">
+                            <i class="fas fa-xmark text-white cursor-pointer" onclick="close_preview()"></i>
+                        </div>
+                        <div class="flex w-full justify-between items-center gap-[1em]">
+                            <img class="h-[100px] hidden" src="../images/bus-road-dhaka-front-notre-dame-college-bus-road-dhaka-front-notre-dame-college-168316658.webp" id="preview-image" alt="">
+                            <video src="" class="hidden h-[100px]" id="preview-video"></video>
+                            <label for="complaint-image" class="relative  transition text-white font-normal tracking-wide   block  rounded-[4px]  cursor-pointer">
+                                <i class="fas fa-notes-medical text-2xl"></i> 
+                            </label>
+                            <input type="file" id="complaint-image" accept="image/*" style="display: none;">
+                        </div>
+                    </div>
+                        
+                </div>
+
+                <div class="w-[75%]">
+
+                    <input type="text" autocomplete="off" id="chat-text" class="h-[50px] border border-l-0 border-[#00000052] outline-none px-4 rounded-r-none   rounded-l-none rounded-[8px] w-full" placeholder="Chat with Gemini . . .">
+                </div>
+
+                <div class="attach relative hover:bg-[#626e79] bg-[#343A40] rounded-l-none rounded-[8px]">
+                    <button  class=" text-white py-3 px-5 h-[50px] flex justify-center items-center" onclick="submitCurrentChat()" >
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                
+                
+                
+
+                <div class="attach ml-4 relative hover:bg-[#626e79] bg-[#343A40] w-[20%] rounded-[8px]">
+                    <button class=" text-white py-3 px-5 h-[50px] flex justify-center items-center gap-[.5em] w-full">
+                        <i class="fas fa-cloud-arrow-up"></i> Submit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer id="footer" class="w-90% m-auto">
+        <p class="text-white text-center font-semibold text-xs opacity-7">Copyright all rights reserved to @github.com/jahir-raihan - 2024</p>
+    </footer>
+    <script>
+        // JavaScript for handling file preview and modal display
+
+        let current_file;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const imageInput = document.getElementById('complaint-image');
+            const videoInput = document.getElementById('complaint-video');
+            const modal = document.getElementById('modal_id');
+            const modalBody = document.getElementById('modal-body');
+            const preview = document.getElementById('preview')
+            const attach_popup = document.getElementById('attach-popup')
+            const img = document.getElementById('preview-image');
+            const video = document.getElementById('preview-video');
+
+            function handleFileInput(file, type) {
+                if (file) {
+                    current_file = file;
+                    const fileURL = URL.createObjectURL(current_file);
+                    
+
+                    // Create and append the appropriate element (image or video)
+                    if (type === 'image') {
+                        const img = document.getElementById('preview-image');
+                        img.classList.remove('hidden')
+                        img.src = fileURL;
+                        preview.classList.remove('hidden')
+                        attach_popup.classList.add('hidden')
+                        
+                    } else if (type === 'video') {
+                        const video = document.getElementById('preview-video');
+                        video.classList.remove('hidden')
+                        video.src = fileURL;
+                        video.controls = true;
+                        preview.classList.remove('hidden')
+                        attach_popup.classList.add('hidden')
+                       
+                    }
+
+                    
+
+                    enable_modal('modal_id'); // Show the modal
+                }
+            }
+
+            imageInput.addEventListener('change', function(event) {
+                videoInput.value = ''; // Clear the video input if an image is selected
+                video.src = ''
+                video.classList.add('hidden')
+                handleFileInput(event.target.files[0], 'image');
+            });
+
+            videoInput.addEventListener('change', function(event) {
+                imageInput.value = ''; // Clear the image input if a video is selected
+                img.src = ''
+                img.classList.add('hidden')
+                handleFileInput(event.target.files[0], 'video');
+            });
+        });
+
+        function disable_modal(modal_id){
+            document.getElementById(modal_id).classList.add('hidden')
+            document.getElementById('header').classList.remove('blur-sm')
+            document.getElementById('container').classList.remove('blur-sm')
+            document.getElementById('footer').classList.remove('blur-sm')
+            document.getElementById('complaint-image').value = '';
+            document.getElementById('complaint-video').value = '';
+            //document.getElementById('modal-body').innerHTML = ''
+            close_preview()
+            current_file = null
+            document.getElementById('modal-body').innerHTML = ''
+        }
+
+        function enable_modal(modal_id){
+            document.getElementById(modal_id).classList.remove('hidden');
+            document.getElementById('header').classList.add('blur-sm')
+            document.getElementById('container').classList.add('blur-sm')
+            document.getElementById('footer').classList.add('blur-sm')
+        }
+
+        function toggle_attach_popup(){
+            
+            let popup_classList = document.getElementById('attach-popup').classList
+            
+            popup_classList.toggle('hidden')
+
+            
+        }
+
+        function close_preview(){
+            const preview = document.getElementById('preview')
+            preview.classList.add('hidden')
+
+            const imageInput = document.getElementById('complaint-image');
+            const videoInput = document.getElementById('complaint-video');
+            videoInput.value = ''
+            imageInput.value = ''
+
+            const img = document.getElementById('preview-image');
+            const video = document.getElementById('preview-video');
+            img.src = ''
+            video.src = ''
+
+            current_file = null
+        }
+        
+
+        // Select the input field
+        const chatInput = document.getElementById('chat-text');
+
+        // Add event listener for 'keydown' event
+        chatInput.addEventListener('keydown', function(event) {
+            // Check if the Enter key (key code 13) is pressed
+            if (event.key === "Enter") {
+                // Call the submitCurrentChat function
+                submitCurrentChat();
+            }
+        });
+
+        function submitCurrentChat(){
+            
+            let text = document.getElementById('chat-text')
+            let modal_body = document.getElementById('modal-body')
+            let temp_text = text
+
+            if (text.value.trim().length > 0){
+                let file_url = null;
+                
+                let is_video = false
+
+                if (current_file && current_file.type.includes('video')){
+                    is_video = true;
+                }
+
+                if (current_file){
+                    file_url =  URL.createObjectURL(current_file);
+                    
+                }
+                console.log(is_video, file_url)
+
+                let template_node = get_human_chat_template(text.value.trim(), file_url, is_video)
+                modal_body.appendChild(template_node)
+                text.value = ''
+                close_preview()
+
+                auto_scroll()
+
+                submitToGemini(temp_text)
+            }
+            
+
+
+        }
+
+        function auto_scroll(){
+            var elem = document.getElementById('modal-body');
+            elem.scrollTop = elem.scrollHeight;
+        }
+
+
+        function submitToGemini(chat_text){
+
+            let data = new FormData();
+            data.append('chat_text', chat_text);
+            
+            if (current_file){
+                data.append('file', current_file)
+            }
+
+            // part for submitting to backend
+            response = 'some big text that the ai will write'
+            // end part
+
+            console.log("Submitted")
+            render_ai_chat(response)
+        }
+
+        function render_ai_chat(response){
+
+            let modal_body = document.getElementById('modal-body')
+
+            let ai_chat_div = document.createElement('div')
+            ai_chat_div.classList.add('ai-chat', 'my-4', 'flex', 'justify-start')
+
+            let template = `
+            
+            
+
+                <div class="w-[40px] h-[40px] bg-[#494F55] rounded-[50%] flex justify-center items-center mr-1">
+                    <i class="fas fa-robot text-white"></i>
+                </div>
+
+                <div class="chat-obj w-fit  px-2 rounded-[24px] ">
+                    
+                    <div class="message-text   mt-2  opacity-80">
+                        ${response}
+                    </div>
+                </div>
+                
+            
+            `
+            ai_chat_div.innerHTML = template
+            modal_body.appendChild(ai_chat_div)
+            auto_scroll()
+        }
+
+        function get_human_chat_template(text, file_url, is_video){
+
+            // Create a div of human template then insert all chatted data of user to render
+
+
+            let human_chat_root_div_element = document.createElement('div')
+            human_chat_root_div_element.classList.add('human-chat', 'my-4', 'flex', 'justify-end')
+
+            let template_first_div = document.createElement('div')
+            template_first_div.classList.add('chat-obj', 'max-w-[60%]', 'shadow', 'border-2', 'border-[#494949]', 'bg-[#494F55]', 'p-4', 'rounded-[24px]')
+            
+
+            if (file_url){
+                
+                let file_div = document.createElement('div')
+                file_div.classList.add('flex',  'mb-2',  'justify-end')
+
+                if (is_video){
+                    
+                    let video_element = document.createElement('video')
+                    video_element.classList.add('h-[150px]')
+                    
+                    video_element.src = file_url
+                    video_element.controls = true;
+                    file_div.appendChild(video_element)
+                       
+
+                } else {
+                    let image_element = document.createElement('img')
+                    image_element.classList.add('w-[280px]', 'rounded-[4px]', 'block')
+                    
+                    image_element.src = file_url
+                    file_div.appendChild(image_element)
+                    
+                }
+                
+                template_first_div.appendChild(file_div)
+            }
+            
+            let message_element = document.createElement('p')
+            message_element.classList.add('message-text', 'text-right', 'text-white',  'opacity-80')
+            message_element.innerHTML = text
+
+            template_first_div.appendChild(message_element)
+
+            let user_icon_element = document.createElement('div')
+            user_icon_element.classList.add('w-[40px]', 'h-[40px]', 'bg-[#494F55]', 'rounded-[50%]', 'flex', 'justify-center',  'items-center',  'ml-1')
+            user_icon_element.innerHTML = '<i class="fas fa-user text-white"></i>'
+            
+            human_chat_root_div_element.appendChild(template_first_div)
+            human_chat_root_div_element.appendChild(user_icon_element)
+            return human_chat_root_div_element
+        }
+    
+    </script>
+</body>
+</html>
