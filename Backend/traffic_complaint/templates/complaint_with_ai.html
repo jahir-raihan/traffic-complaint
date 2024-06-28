@@ -1,29 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complaint options | Choose complaint options</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="../css/output.css">
-    <link rel="stylesheet" href="../css/raw_css.css">
-</head>
-<body class="bg-[#494F55]">
-    <header id="header" class="bg-[#343A40] h-20">
-        <nav class="flex justify-between w-[90%] m-auto max-w-[1600px] h-[100%] items-center">
-            <div class="left-nav">
-                <div class="logo">
-                    <a href="index.html" class="font-medium text-white text-2xl" >Traffic <span class="text-red-400">Complaint</span></a>
-                </div>
-            </div>
-            <div class="right-nav">
-                <div class="nav-menus *:ml-4 *:cursor-pointer">
-                    <i class="fas fa-circle-info text-white text-2xl"></i>
-                    <i class="fas fa-sign-in text-white text-2xl"></i>
-                </div>
-            </div>
-        </nav>
-    </header>
+{% extends 'base.html' %}
+
+{% block title %}Complain with AI {% endblock title %}
+
+
+{% block logo %}
+    <a href="{% url 'home' %}" class="font-medium text-white text-2xl" >Traffic <span class="text-red-400">Complaint</span></a>
+{% endblock logo %}
+
+{% block container %}
+
     <div id="container" class="container w-[90%] max-w-[1600px] h-[88vh] m-auto flex justify-center items-center">
         <div class="w-full h-fit">
             <div class="w-full p-5 rounded-[8px] bg-[#353a40] shadow-[#000] m-auto">
@@ -46,6 +31,10 @@
             </div>
         </div>
     </div>
+
+{% endblock container %}
+
+{% block modal %}
     <div class="modal h-3/4 w-[70%] bg-white fixed top-[7.5em] p-4 left-[15%] z-[100] max-w[1400px] shadow-[#000000] shadow-2xl rounded  hidden" id="modal_id">
         <div class="modal-header flex justify-between items-center">
             <p class="modal-title text-lg opacity-8"><span class="font-medium"></span></p>
@@ -114,9 +103,10 @@
             </div>
         </div>
     </div>
-    <footer id="footer" class="w-90% m-auto">
-        <p class="text-white text-center font-semibold text-xs opacity-7">Copyright all rights reserved to @github.com/jahir-raihan - 2024</p>
-    </footer>
+
+{% endblock modal %}
+
+{% block script %}
     <script>
         // JavaScript for handling file preview and modal display
 
@@ -378,5 +368,4 @@
         }
     
     </script>
-</body>
-</html>
+{% endblock script %}

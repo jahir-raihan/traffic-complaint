@@ -50,3 +50,50 @@ class ListComplaint(View):
 
         return render(request, self.template_name, context)
 
+
+class ComplainWithAI(View):
+
+    """
+    View for complaining using AI
+    """
+
+    template_name = 'complaint_with_ai.html'
+
+    def get(self, request):
+
+        """
+        Render page and chat functionality to complain with ai
+
+        :param request:
+        :return:
+        """
+
+        context = {
+
+        }
+
+        return render(request, self.template_name, context)
+
+
+class Complain(View):
+
+    """
+    View for complaining manually
+    """
+
+    template_name = 'complaint_form.html'
+
+    def get(self, request):
+
+        """
+        Render page and chat functionality to complain with AI
+
+        :param request:
+        :return:
+        """
+
+        context = {
+
+        }
+
+        return render(request, self.template_name, context)
