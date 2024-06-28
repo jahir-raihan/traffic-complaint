@@ -3,6 +3,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
+from .models import PoliceStation
 
 # End Imports
 
@@ -92,8 +93,10 @@ class Complain(View):
         :return:
         """
 
-        context = {
+        stations = PoliceStation.objects.all()
 
+        context = {
+            'stations': stations
         }
 
         return render(request, self.template_name, context)

@@ -43,10 +43,12 @@
                             <label for="" class="text-white font-medium block mb-2">Nearest Police Station <span class="text-red-400">*</span></label>
                             <select name="" id="police_station" class="border-none w-full  p-4 opacity-[0.8] outline-none">
                                 <option value="">Select Police Station</option>
-                                <option value="s">s</option>
-                                <option value="d">d</option>
-                                <option value="d">Select Police Station</option>
-                                <option value="e">Select Police Station</option>
+
+                                {% for station in stations %}
+                                    <option value="{{station.id}}">{{station.station_name}}</option>
+                                {% endfor %}
+
+
                             </select>
 
                         </div>
