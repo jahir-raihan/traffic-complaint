@@ -10,3 +10,19 @@ class PoliceStation(models.Model):
     def __str__(self):
         return f'{self.station_name} of {self.city}'
 
+
+class Complain(models.Model):
+    station = models.ForeignKey(PoliceStation, on_delete=models.SET_NULL, null=True, blank=True)
+    location = models.CharField(max_length=200, null=True, blank=True)
+    vehicle_number = models.CharField(max_length=10, null=True, blank=True)
+    contact = models.CharField(max_length=15, null=True, blank=True)
+    complain_details = models.TextField(null=True, blank=True)
+    complain_title = models.CharField(max_length=120, null=True, blank=True)
+
+    def __str__(self):
+        return f'Complaint ID {self.id}. Title: {self.complain_title}'
+
+
+class Attachment(models.Model):
+    complain = models.ForeignKey(Complain, on_delete=models.CASCADE)
+    file = models.FileField(upload_to='complain_files')
