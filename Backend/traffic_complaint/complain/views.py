@@ -100,3 +100,16 @@ class Complain(View):
         }
 
         return render(request, self.template_name, context)
+
+    def post(self, request):
+
+        """
+        Store manual complaint submitted my user
+
+        :param request:
+        :return:
+        """
+
+        data = request.POST
+        print(data)
+

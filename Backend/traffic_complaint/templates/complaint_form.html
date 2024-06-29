@@ -10,11 +10,11 @@
     
 {% block container %}
 
-    <div class="w-full h-svh flex items-center justify-center hidden">
+    <div id="success-message" class="w-full h-svh flex items-center justify-center hidden">
         <div>
             <p class="font-semibold text-green-600 text-center">Submitted Successfully !</p>
             <a href="#">
-                <button class="bg-white py-2 px-2 rounded-md w-full mt-3 hover:text-white hover:bg-slate-500">See all complaints</button>
+                <button class="bg-white py-2 px-2 rounded-md w-full mt-3 hover:text-white hover:bg-slate-500">See your complaint</button>
             </a>
 
             
@@ -22,7 +22,7 @@
         
     </div>
 
-    <div class="container w-[90%] max-w-[1600px] m-auto mt-[5%] flex justify-center items-center ">
+    <div id="container" class="container w-[90%] max-w-[1600px] m-auto mt-[5%] flex justify-center items-center ">
 
         
         <div class="w-full">
@@ -38,10 +38,10 @@
             <div class="options  flex justify-center items-center w-full mt-8  rounded-[8px] shadow-[#000000]  m-auto ">
                 
                 <div class="w-full">
-                    <form action="">
+                    <form action="" id="complain-form">
                         <div class="input">
                             <label for="" class="text-white font-medium block mb-2">Nearest Police Station <span class="text-red-400">*</span></label>
-                            <select name="" id="police_station" class="border-none w-full  p-4 opacity-[0.8] outline-none">
+                            <select required  id="police_station" name="station" class="border-none w-full  p-4 opacity-[0.8] outline-none">
                                 <option value="">Select Police Station</option>
 
                                 {% for station in stations %}
@@ -56,12 +56,12 @@
                         <div class="input flex max-[650px]:block items-center justify-between *:block gap-3">
                             <div class="w-2/4 max-[650px]:w-full max-[650px]:mb-4">
                                 <label for="" class="text-white font-medium block mb-2">Location of crime <span class="text-red-400">*</span></label>
-                                <input type="text" placeholder="Location of crime" class=" outline-none  h-[46px] rounded-[4px] p-2 w-full">
+                                <input type="text" required name="location" placeholder="Location of crime" class=" outline-none  h-[46px] rounded-[4px] p-2 w-full">
                             </div>
 
                             <div class="w-2/4 max-[650px]:w-full max-[650px]:mb-4">
                                 <label for="" class="text-white font-medium block mb-2">Vehicle Number - [Optional]</label>
-                                <input type="text" placeholder="Vehicle number" class=" outline-none h-[46px] rounded-[4px] p-2 w-full">
+                                <input type="text" name="vehicle_number" placeholder="Vehicle number" class=" outline-none h-[46px] rounded-[4px] p-2 w-full">
                             </div>
                             
                         </div>
@@ -69,13 +69,13 @@
                         <div class="input flex max-[650px]:block justify-between items-center w-full gap-3">
                             <div class="w-2/4 max-[650px]:w-full max-[650px]:mb-4">
                                 <label for="" class="text-white font-medium block mb-2">Image <span class="text-red-400">*</span></label>
-                                <input type="file" accept="file_extension|.jpg,.png,.jpeg" class="text-[#353a40] p-2 rounded-[4px] w-full bg-white" placeholder="Full image of the vehicle">
+                                <input type="file" name="image" accept="file_extension|.jpg,.png,.jpeg" class="text-[#353a40] p-2 rounded-[4px] w-full bg-white" placeholder="Full image of the vehicle">
                                 <div id="image_preview1"></div>
                             </div>
 
                             <div class="w-2/4 max-[650px]:w-full max-[650px]:mb-4">
                                 <label for="" class="text-white font-medium block mb-2">Image - [Optional]</label>
-                                <input type="file" accept="file_extension|.jpg,.png,.jpeg" class="text-[#353a40] p-2  rounded-[4px] w-full bg-white">
+                                <input type="file" name="image" accept="file_extension|.jpg,.png,.jpeg" class="text-[#353a40] p-2  rounded-[4px] w-full bg-white">
                                 <div id="image_preview2"></div>
                             </div>
                             
@@ -83,23 +83,23 @@
 
                         <div class="input w-full max-[650px]:block flex justify-between gap-3 items-center">
                             <div class="w-2/4 max-[650px]:w-full max-[650px]:mb-4">
-                                <label for="" class="text-white font-medium block mb-2">Short video - [Optional]</label>
-                                <input type="file" accept="video/mp4,video/mkv, video/x-m4v,video/*" class="text-[#353a40] p-2 rounded-[4px] w-full bg-white">
+                                <label for=""  class="text-white font-medium block mb-2">Short video - [Optional]</label>
+                                <input type="file" name="video" accept="video/mp4,video/mkv, video/x-m4v,video/*" class="text-[#353a40] p-2 rounded-[4px] w-full bg-white">
                             </div>
 
                             <div class="w-2/4 max-[650px]:w-full max-[650px]:mb-4">
                                 <label for="" class="text-white font-medium block mb-2">Your contact</label>
-                                <input type="text" placeholder="Your phone number of email" class="outline-none h-[46px] rounded-[4px] p-2 w-full">
+                                <input type="text" name="contact" placeholder="Your phone number of email" class="outline-none h-[46px] rounded-[4px] p-2 w-full">
                             </div>
                             
                         </div>
 
                         <div class="input w-full">
                             <label for="" class="text-white font-medium block mb-2">Complaint Note <span class="text-red-400">*</span></label>
-                            <textarea name="" id="" cols="30" rows="10" class="w-full max-h-[200px] max-w-[100%] outline-none min-h-[100px] p-2 rounded-[4px]" placeholder="Enter your complaint note"></textarea>
+                            <textarea required  name="complain_details" id="" cols="30" rows="10" class="w-full max-h-[200px] max-w-[100%] outline-none min-h-[100px] p-2 rounded-[4px]" placeholder="Enter your complaint note"></textarea>
                         </div>
 
-                        <button class="submit w-full bg-[#689095] h-[40px] my-[16px] rounded-[4px] text-white font-medium">
+                        <button id="submit-btn" type="submit" class="submit w-full bg-[#689095] h-[40px] my-[16px] rounded-[4px] text-white font-medium">
                             <i class="fas fa-circle-notch animate-spin"></i>
                             Submitting ...
                         </button>
@@ -117,8 +117,61 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-     $(function(){
-      $("#police_station").selectize();
-     }); 
+        $(function(){
+            $("#police_station").selectize();
+        });
+        $(document).on('submit', '#complain-form', function(e){
+            e.preventDefault();
+
+            let form_data = new FormData($('#complain-form').get(0))
+            // Sending request
+            let req = $.ajax({
+                type:'post',
+                url: '{% url "complain" %}',
+                data: form_data,
+                cache: false,
+                processData: false,
+                contentType: false,
+
+            });
+
+            // On request success
+            req.done(function(response){
+
+        $(function(){
+            $("#police_station").selectize();
+        });
+
+        $(document).on('submit', '#complain-form', function(e){
+            e.preventDefault();
+            let submit_btn = document.getElementById('submit-btn')
+            submit_btn.innerHTML = '<i class="fas fa-circle-notch animate-spin"></i> Submitting ...'
+
+            let form_data = new FormData($('#complain-form').get(0))
+            // Sending request
+            let req = $.ajax({
+                type:'post',
+                url: '{% url "complain" %}',
+                data: form_data,
+                cache: false,
+                processData: false,
+                contentType: false,
+
+            });
+
+            // On request success
+            req.done(function(response){
+                document.getElementById('container').classList.add('hidden');
+                document.getElementById('success-message').classList.remove('hidden');
+                submit_btn.innerHTML = '<i class="fas fa-circle-notch"></i> Submit'
+
+            })
+
+
+
+
+
+        })
+
     </script>
 {% endblock script %}
