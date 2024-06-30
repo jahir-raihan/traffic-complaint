@@ -38,7 +38,8 @@
             <div class="options  flex justify-center items-center w-full mt-8  rounded-[8px] shadow-[#000000]  m-auto ">
                 
                 <div class="w-full">
-                    <form action="" id="complain-form">
+                    <form action="" id="complain-form" enctype="multipart/form-data">
+                        {% csrf_token %}
                         <div class="input">
                             <label for="" class="text-white font-medium block mb-2">Nearest Police Station <span class="text-red-400">*</span></label>
                             <select required  id="police_station" name="station" class="border-none w-full  p-4 opacity-[0.8] outline-none">
@@ -100,8 +101,8 @@
                         </div>
 
                         <button id="submit-btn" type="submit" class="submit w-full bg-[#689095] h-[40px] my-[16px] rounded-[4px] text-white font-medium">
-                            <i class="fas fa-circle-notch animate-spin"></i>
-                            Submitting ...
+                            <i class="fas fa-paper-plane"></i>
+                            Submit
                         </button>
 
                     </form>
@@ -117,26 +118,6 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        $(function(){
-            $("#police_station").selectize();
-        });
-        $(document).on('submit', '#complain-form', function(e){
-            e.preventDefault();
-
-            let form_data = new FormData($('#complain-form').get(0))
-            // Sending request
-            let req = $.ajax({
-                type:'post',
-                url: '{% url "complain" %}',
-                data: form_data,
-                cache: false,
-                processData: false,
-                contentType: false,
-
-            });
-
-            // On request success
-            req.done(function(response){
 
         $(function(){
             $("#police_station").selectize();
@@ -148,6 +129,7 @@
             submit_btn.innerHTML = '<i class="fas fa-circle-notch animate-spin"></i> Submitting ...'
 
             let form_data = new FormData($('#complain-form').get(0))
+            console.log("came here");
             // Sending request
             let req = $.ajax({
                 type:'post',
@@ -166,10 +148,6 @@
                 submit_btn.innerHTML = '<i class="fas fa-circle-notch"></i> Submit'
 
             })
-
-
-
-
 
         })
 
