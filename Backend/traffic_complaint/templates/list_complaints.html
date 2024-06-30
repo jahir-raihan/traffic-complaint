@@ -45,6 +45,29 @@
 
         <div class="complaints-list w-full  m-auto">
             <ul class="w-full">
+                {% for complain in complaints %}
+                    <li class="w-full">
+                        <div class="complaint-card flex w-full justify-between items-center p-5 bg-slate-50 rounded-md shadow-sm shadow-slate-50 my-4 sm:flex">
+
+                            <div class="complaint-card-left opacity-[.8]">
+                                <p><b>Complaint no:</b> {{complain.id}}</p>
+                                <p><b>Vehicle number:</b> {{complain.vehicle_number}}</p>
+                                <p><b>Location of crime:</b> {{complain.location}}</p>
+                                <p><b>Complaint time:</b> {{complain.created_at|date:"d M, Y - h:i A"}}</p>
+                            </div>
+
+                            <div class="complaint-card-right text-center">
+                                <p class="status font-medium">Status</p>
+                                <p class="text-orange-400">{{complain.get_status_display}}</p>
+
+                                <button onclick="enable_modal('modal_id')" class="view-proof-btn bg-slate-500 p-2 px-5 rounded text-white hover:bg-slate-400 mt-4">
+                                    <i class="fas fa-receipt mr-1"></i>
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
                 <li class="w-full">
                     <div class="complaint-card flex w-full justify-between items-center p-5 bg-slate-50 rounded-md shadow-sm shadow-slate-50 my-4 sm:flex">
 
@@ -73,26 +96,36 @@
 
 {% block modal %}
 
-    <div class="modal h-3/4 w-[70%] fixed top-[7.5em] p-4 left-[15%] z-[100] max-w[1400px] shadow-[#000000] shadow-2xl  rounded  bg-white hidden" id="modal_id">
+    <div class="modal h-3/4 w-[70%] fixed top-[7.5em] p-4 left-[15%] z-[100] max-w[1400px] shadow-[#000000] shadow-2xl  rounded  bg-white {% if not complaint %} hidden {% endif %}" id="modal_id">
         <div class="modal-header flex justify-between items-center">
-            <p class="modal-title text-lg  opacity-8"><span class="font-medium">Complaint No:</span> 1213010318313</p>
+            <p class="modal-title text-lg  opacity-8"><span class="font-medium">Complaint No:</span> {{complaint.id}}</p>
             <i onclick="disable_modal('modal_id')" class="fas fa-xmark rounded bg-[#343A40] text-white cursor-pointer shadow flex justify-center items-center h-[30px] w-[30px]"></i>
         </div>
 
         <div class="modal-body mt-5 h-[82%]   border-t-2 border-b-2 overflow-y-scroll py-2">
             <div class="details mt-5">
                 
-                <p><b>Vehicle number:</b> <span>11-4565</span></p>
-                <p><b>Location of crime:</b> <span>Merul Badda, DIT Project Dhaka</span></p>
-                <p><b>Complaint time:</b> <span>11 May, 2024 - 10:12 PM</span></p>
+                <p><b>Vehicle number:</b> <span>{{complaint.vehicle_number}}</span></p>
+                <p><b>Location of crime:</b> <span>{{complaint.location}}</span></p>
+                <p><b>Complaint time:</b> <span> {{complaint.created_at|date:"d M, Y - h:i A"}}</span></p>
 
-                <p class="mt-2"><b>Complaint Note: </b>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quas ratione dolorem incidunt atque, eveniet aut, totam odio ipsam, delectus nobis necessitatibus veritatis eligendi reiciendis officia assumenda eaque dolorum. Ipsam, molestias amet. Dolore, mollitia expedita. Iste, repellendus asperiores nemo impedit beatae ea non error in blanditiis officiis, quod fuga tenetur dignissimos? Hic debitis iure a voluptatem quis voluptas nobis maiores, rerum deserunt. Ipsam rem, iusto ipsa, maxime molestiae aliquam assumenda accusamus maiores exercitationem veniam, et dignissimos hic placeat? Aperiam nemo molestiae quas optio saepe tenetur fuga harum fugit dicta incidunt consequatur impedit consequuntur voluptatum, magni nesciunt quisquam dolorum! Ipsum, rerum.</p>
+                <p class="mt-2"><b>Complaint Note: </b>{{complaint.complain_details}}</p>
             </div>
 
             <div class="files mt-5">
 
-                <p class="text-lg font-medium opacity-8 mb-2">Image(s)</p>
-                <img class="h-[300px] object-cover" src="../images//bus-road-dhaka-front-notre-dame-college-bus-road-dhaka-front-notre-dame-college-168316658.webp" alt="">
+                <p class="text-lg font-medium opacity-8 mb-2">Image(s) or Video</p>
+                {% for file in complaint.attachment.all %}
+                    {% if file.is_image %}
+                        <img class="h-[300px] object-cover" src="{{ file.url }}">
+                    {% elif file.is_video %}
+                        <video class="h-[300px] object-cover" controls>
+                            <source src="{{ file.url }}" type="{{ file.content_type }}">
+                            Your browser does not support the video tag.
+                        </video>
+                    {% endif %}
+                {% endfor %}
+
             </div>
         </div>
 
@@ -115,6 +148,9 @@
         document.getElementById('container').classList.remove('blur-sm')
         document.getElementById('footer').classList.remove('blur-sm')
     }
+    {% if complaint %}
+    enable_modal('modal_id')
+    {% endif %}
 
     function enable_modal(modal_id){
         document.getElementById(modal_id).classList.remove('hidden');
