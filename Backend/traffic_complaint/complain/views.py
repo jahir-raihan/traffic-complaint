@@ -1,5 +1,6 @@
 # Imports
 from django.core.exceptions import ValidationError
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db import transaction
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import render
@@ -29,29 +30,6 @@ class HomeView(View):
         """
 
         return render(request, self.template_name, {})
-
-
-class ListComplaint(View):
-
-    """
-    View to ist out complaints for normal users
-    """
-
-    template_name = 'list_complaints.html'
-
-    def get(self, request):
-
-        """
-        Render complaints list with search and filtering functionality
-        :param request:
-        :return:
-        """
-
-        context = {
-
-        }
-
-        return render(request, self.template_name, context)
 
 
 class ComplainWithAI(View):
@@ -142,8 +120,12 @@ class ComplainView(View):
                         status=400
                     )
 
+                file_type = 'image'
+                if not content_type.startswith('image/'):
+                    file_type = 'video'
+
                 # Creating attachment instance
-                attachment = Attachment(complain=complain, file=uploaded_file)
+                attachment = Attachment(complain=complain, file=uploaded_file, file_type=file_type)
                 attachments.append(attachment)
 
         with transaction.atomic():
@@ -155,4 +137,51 @@ class ComplainView(View):
                                     status=500)
 
         return JsonResponse({'success': True, 'message': 'Complaint filed successfully!'})
+
+
+class ComplainListNormalUser(View):
+
+    """
+    View for listing out complains to normal users.
+    """
+
+    template_name = 'list_complaints.html'
+
+    def get(self, request):
+
+        """
+        Return rendered list of complaints to normal users with filtering functionality
+
+        :param request:
+        :return:
+        """
+
+        complaints = Complain.objects.all()
+
+        # Pagination logic
+        page = request.GET.get('page', 1)
+        paginator = Paginator(complaints, 10)
+
+        try:
+            complaints_page = paginator.page(page)
+        except PageNotAnInteger:
+            # If the page is not an integer, deliver the first page
+            complaints_page = paginator.page(1)
+        except EmptyPage:
+            # If the page is out of range, deliver the last page of results
+            complaints_page = paginator.page(paginator.num_pages)
+
+        # If someone redirects to this page for opening a complaint
+        complaint = request.GET.get('complaint_id')
+        if complaint:
+            complaint = Complain.objects.filter(pk=complaint).first()
+            print(complaint)
+
+        context = {
+            'complaints': complaints_page,
+            'complaint': complaint
+        }
+
+        # Render the template with the paginated complaints and or complaint
+        return render(request, self.template_name, context)
 
