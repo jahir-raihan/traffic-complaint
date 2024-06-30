@@ -114,7 +114,7 @@ class ComplainView(View):
 
         data = request.POST
 
-        station_id = data.get('police_station')
+        station_id = data.get('station')
         police_station = None
         if station_id:
             police_station = PoliceStation.objects.get(pk=station_id)

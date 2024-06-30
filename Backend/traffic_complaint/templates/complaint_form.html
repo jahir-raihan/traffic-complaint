@@ -12,7 +12,7 @@
 
     <div id="success-message" class="w-full h-svh flex items-center justify-center hidden">
         <div>
-            <p class="font-semibold text-green-600 text-center">Submitted Successfully !</p>
+            <p id="success-text" class="font-semibold text-green-600 text-center">Submitted Successfully !</p>
             <a href="#">
                 <button class="bg-white py-2 px-2 rounded-md w-full mt-3 hover:text-white hover:bg-slate-500">See your complaint</button>
             </a>
@@ -146,6 +146,8 @@
                 document.getElementById('container').classList.add('hidden');
                 document.getElementById('success-message').classList.remove('hidden');
                 submit_btn.innerHTML = '<i class="fas fa-circle-notch"></i> Submit'
+
+                $('#success-text').html(response.message)
 
             })
 
