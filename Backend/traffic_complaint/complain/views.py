@@ -1,9 +1,11 @@
 # Imports
-
-from django.http import HttpResponse
+from django.core.exceptions import ValidationError
+from django.db import transaction
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import render
 from django.views import View
-from .models import PoliceStation
+from .models import PoliceStation, Attachment, Complain
+
 
 # End Imports
 
@@ -76,7 +78,7 @@ class ComplainWithAI(View):
         return render(request, self.template_name, context)
 
 
-class Complain(View):
+class ComplainView(View):
 
     """
     View for complaining manually
@@ -111,5 +113,46 @@ class Complain(View):
         """
 
         data = request.POST
-        print(data)
+
+        station_id = data.get('police_station')
+        police_station = None
+        if station_id:
+            police_station = PoliceStation.objects.get(pk=station_id)
+
+        complain = Complain(
+            location=data.get('location'),
+            vehicle_number=data.get('vehicle_number'),
+            contact=data.get('contact'),
+            complain_details=data.get('complain_details'),
+        )
+
+        if police_station:
+            complain.station = police_station
+
+        complain.complain_title = 'some generated complaint title'
+        complain.save()
+
+        attachments = []
+        for field_name, files in request.FILES.lists():  # `lists()` to handle multiple files
+            for uploaded_file in files:
+                content_type = uploaded_file.content_type
+                if not content_type.startswith('image/') and not content_type.startswith('video/'):
+                    return JsonResponse(
+                        {"message": f'Invalid file type for field "{field_name}": {content_type}'},
+                        status=400
+                    )
+
+                # Creating attachment instance
+                attachment = Attachment(complain=complain, file=uploaded_file)
+                attachments.append(attachment)
+
+        with transaction.atomic():
+            try:
+                # Bulk create attachments in a transaction
+                Attachment.objects.bulk_create(attachments)
+            except Exception as e:
+                return JsonResponse({'message': 'An error occurred while creating attachments.', 'error': str(e)},
+                                    status=500)
+
+        return JsonResponse({'success': True, 'message': 'Complaint filed successfully!'})
 
