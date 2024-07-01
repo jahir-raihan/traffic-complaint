@@ -16,26 +16,32 @@
                 Back
             </button>
 
-            <form action="">
+            <form method="get" action="?page=1&complaint_id=">
                 <div class="input">
                     <label for="" class="text-white font-medium block mb-2">Police Station</label>
-                    <select name="" id="police_station" class="border-none w-full  p-4 opacity-[0.8] outline-none">
+                    <select name="station" id="police_station" class="border-none w-full  p-4 opacity-[0.8] outline-none">
                         <option value="">Search Police Station</option>
-                        <option value="s">s</option>
-                        <option value="d">d</option>
-                        <option value="d">Select Police Station</option>
-                        <option value="e">Select Police Station</option>
-                        <option value="s">s</option>
-                        <option value="d">d</option>
-                        <option value="d">Select Police Station</option>
-                        <option value="e">Select Police Station</option>
+                        {% for station in stations %}
+                            {% if request.GET.station == station.id|slugify %}
+                                <option selected value="{{station.id}}">{{station.station_name}}</option>
+                            {% else %}
+                                <option value="{{station.id}}">{{station.station_name}}</option>
+                            {% endif %}
+
+                        {% endfor %}
                     </select>
 
                 </div>
 
+                <input type="hidden" name="page" value="{{request.GET.page}}">
+
                 <div class="input w-full">
                     <label for="" class="text-white font-medium block mb-2">Search</label>
-                    <input type="text" placeholder="Search with anything ..." class="outline-none h-[46px] rounded-[4px] p-2 w-full">
+                    <input type="text" value="{{request.GET.search}}" name="search" placeholder="Search with anything ..." class="outline-none h-[46px] rounded-[4px] p-2 w-full">
+                    <button type="submit"  class="view-proof-btn bg-slate-500 p-2 px-5 rounded text-white hover:bg-slate-400 mt-4">
+                        <i class="fas fa-magnifying-glass "></i>
+                        Search
+                    </button>
                 </div>
 
             </form>
@@ -60,35 +66,18 @@
                                 <p class="status font-medium">Status</p>
                                 <p class="text-orange-400">{{complain.get_status_display}}</p>
 
-                                <button onclick="enable_modal('modal_id')" class="view-proof-btn bg-slate-500 p-2 px-5 rounded text-white hover:bg-slate-400 mt-4">
-                                    <i class="fas fa-receipt mr-1"></i>
-                                    View Details
-                                </button>
+                                <a href="{% url 'list_complaints_users' %}?page=1&complaint_id={{complain.id}}">
+                                   <button onclick="enable_modal('modal_id')" class="view-proof-btn bg-slate-500 p-2 px-5 rounded text-white hover:bg-slate-400 mt-4">
+                                        <i class="fas fa-receipt mr-1"></i>
+                                        View Details
+                                    </button>
+                                </a>
+
                             </div>
                         </div>
                     </li>
                 {% endfor %}
-                <li class="w-full">
-                    <div class="complaint-card flex w-full justify-between items-center p-5 bg-slate-50 rounded-md shadow-sm shadow-slate-50 my-4 sm:flex">
 
-                        <div class="complaint-card-left opacity-[.8]">
-                            <p><b>Complaint no:</b> 1213010318313</p>
-                            <p><b>Vehicle number:</b> 11-4565</p>
-                            <p><b>Location of crime:</b> Merul Badda, DIT Project Dhaka</p>
-                            <p><b>Complaint time:</b> 11 May, 2024 - 10:12 PM</p>
-                        </div>
-
-                        <div class="complaint-card-right text-center">
-                            <p class="status font-medium">Status</p>
-                            <p class="text-orange-400">Investigating</p>
-
-                            <button onclick="enable_modal('modal_id')" class="view-proof-btn bg-slate-500 p-2 px-5 rounded text-white hover:bg-slate-400 mt-4">
-                                <i class="fas fa-receipt mr-1"></i>
-                                View Details
-                            </button>
-                        </div>
-                    </div>
-                </li>
             </ul>
         </div>
     </div>
@@ -116,11 +105,12 @@
 
                 <p class="text-lg font-medium opacity-8 mb-2">Image(s) or Video</p>
                 {% for file in complaint.attachment.all %}
+
                     {% if file.is_image %}
-                        <img class="h-[300px] object-cover" src="{{ file.url }}">
+                        <img class="h-[300px] object-cover my-3" src="{{ file.file }}">
                     {% elif file.is_video %}
-                        <video class="h-[300px] object-cover" controls>
-                            <source src="{{ file.url }}" type="{{ file.content_type }}">
+                        <video class="h-[300px] object-cover my-3" controls>
+                            <source src="{{ file.file }}" type="{{ file.content_type }}">
                             Your browser does not support the video tag.
                         </video>
                     {% endif %}
