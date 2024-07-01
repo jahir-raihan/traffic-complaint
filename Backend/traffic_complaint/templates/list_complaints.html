@@ -37,7 +37,7 @@
 
                 <div class="input w-full">
                     <label for="" class="text-white font-medium block mb-2">Search</label>
-                    <input type="text" value="{{request.GET.search}}" name="search" placeholder="Search with anything ..." class="outline-none h-[46px] rounded-[4px] p-2 w-full">
+                    <input type="text" value="{{request.GET.search}}" name="search" placeholder="Search with location, case number, vehicle number ..." class="outline-none h-[46px] rounded-[4px] p-2 w-full">
                     <button type="submit"  class="view-proof-btn bg-slate-500 p-2 px-5 rounded text-white hover:bg-slate-400 mt-4">
                         <i class="fas fa-magnifying-glass "></i>
                         Search
@@ -62,18 +62,42 @@
                                 <p><b>Complaint time:</b> {{complain.created_at|date:"d M, Y - h:i A"}}</p>
                             </div>
 
-                            <div class="complaint-card-right text-center">
-                                <p class="status font-medium">Status</p>
-                                <p class="text-orange-400">{{complain.get_status_display}}</p>
+                            {% if request.user.is_police %}
 
-                                <a href="{% url 'list_complaints_users' %}?page=1&complaint_id={{complain.id}}">
-                                   <button onclick="enable_modal('modal_id')" class="view-proof-btn bg-slate-500 p-2 px-5 rounded text-white hover:bg-slate-400 mt-4">
-                                        <i class="fas fa-receipt mr-1"></i>
-                                        View Details
-                                    </button>
-                                </a>
+                                <div class="complaint-card-right text-center">
+                                    <p class="status font-medium">Actions</p>
 
-                            </div>
+                                    <select name="status" id="status-1" class=" outline-none bg-orange-400 text-white p-2 px-5 rounded">
+                                        <option  value="1">Pending</option>
+                                        <option  value="2">Investigating</option>
+                                        <option value="2">Solved</option>
+                                        <option value="4">Archive</option>
+                                    </select>
+
+
+                                    <a href="{% url 'list_complaints_users' %}?page=1&complaint_id={{complain.id}}&station={{request.GET.station}}&search={{request.GET.search}}">
+                                       <button onclick="enable_modal('modal_id')" class="view-proof-btn bg-slate-500 p-2 px-5 rounded text-white hover:bg-slate-400 mt-4">
+                                            <i class="fas fa-receipt mr-1"></i>
+                                            View Details
+                                        </button>
+                                    </a>
+                                </div>
+
+                            {% else %}
+
+                                <div class="complaint-card-right text-center">
+                                    <p class="status font-medium">Status</p>
+                                    <p class="text-orange-400">{{complain.get_status_display}}</p>
+
+                                    <a href="{% url 'list_complaints_users' %}?page=1&complaint_id={{complain.id}}&station={{request.GET.station}}&search={{request.GET.search}}">
+                                       <button onclick="enable_modal('modal_id')" class="view-proof-btn bg-slate-500 p-2 px-5 rounded text-white hover:bg-slate-400 mt-4">
+                                            <i class="fas fa-receipt mr-1"></i>
+                                            View Details
+                                        </button>
+                                    </a>
+
+                                </div>
+                            {% endif %}
                         </div>
                     </li>
                 {% endfor %}
@@ -128,25 +152,26 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-     $(function(){
-      $("#police_station").selectize();
-     }); 
+        $(function(){
+            $("#police_station").selectize();
+        });
 
-    function disable_modal(modal_id){
-        document.getElementById(modal_id).classList.add('hidden')
-        document.getElementById('header').classList.remove('blur-sm')
-        document.getElementById('container').classList.remove('blur-sm')
-        document.getElementById('footer').classList.remove('blur-sm')
-    }
-    {% if complaint %}
-    enable_modal('modal_id')
-    {% endif %}
+        function disable_modal(modal_id){
+            document.getElementById(modal_id).classList.add('hidden')
+            document.getElementById('header').classList.remove('blur-sm')
+            document.getElementById('container').classList.remove('blur-sm')
+            document.getElementById('footer').classList.remove('blur-sm')
+        }
+        {% if complaint %}
+        enable_modal('modal_id')
+        {% endif %}
 
-    function enable_modal(modal_id){
-        document.getElementById(modal_id).classList.remove('hidden');
-        document.getElementById('header').classList.add('blur-sm')
-        document.getElementById('container').classList.add('blur-sm')
-        document.getElementById('footer').classList.add('blur-sm')
-    }
+        function enable_modal(modal_id){
+            document.getElementById(modal_id).classList.remove('hidden');
+            document.getElementById('header').classList.add('blur-sm')
+            document.getElementById('container').classList.add('blur-sm')
+            document.getElementById('footer').classList.add('blur-sm')
+        }
+
     </script>
 {% endblock script %}
