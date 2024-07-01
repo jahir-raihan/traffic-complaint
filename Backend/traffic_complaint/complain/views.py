@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import render
 from django.views import View
 from .models import PoliceStation, Attachment, Complain
-
+from django.db.models import Q
 
 # End Imports
 
@@ -156,7 +156,19 @@ class ComplainListNormalUser(View):
         :return:
         """
 
-        complaints = Complain.objects.all()
+        # Filtering section
+        search = request.GET.get('search', '')
+        police_station = request.GET.get('station', None)
+
+        complaints = Complain.objects.filter(
+            Q(location__icontains=search) | Q(vehicle_number__icontains=search) |
+            Q(complain_title__icontains=search) | Q(id__icontains=search)
+        )
+
+        if police_station:
+            complaints = complaints.filter(
+                Q(station__id=int(police_station))
+            )
 
         # Pagination logic
         page = request.GET.get('page', 1)
@@ -175,11 +187,13 @@ class ComplainListNormalUser(View):
         complaint = request.GET.get('complaint_id')
         if complaint:
             complaint = Complain.objects.filter(pk=complaint).first()
-            print(complaint)
+
+        stations = PoliceStation.objects.all()
 
         context = {
             'complaints': complaints_page,
-            'complaint': complaint
+            'complaint': complaint,
+            'stations': stations
         }
 
         # Render the template with the paginated complaints and or complaint
