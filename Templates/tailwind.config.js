@@ -2,7 +2,13 @@
 module.exports = {
   content: ['./html/*'],
   theme: {
-    extend: {},
+    extend: {
+      width:{
+        'login-width': '360px',
+        'full': '100%',
+      },
+    
+    },
   },
   plugins: [],
 }
