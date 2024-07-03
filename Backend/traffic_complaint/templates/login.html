@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.min.css" integrity="sha512-wCrId7bUEl7j1H60Jcn4imkkiIYRcoyq5Gcu3bpKAZYBJXHVMmkL4rhtyhelxSFuPMIoQjiVsanrHxcs2euu/w==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="{% static 'css/raw_css.css' %}">
     <link rel="stylesheet" href="{% static 'css/login_registration.css' %}">
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/login_register.js' %}"></script>
     
     {% block title %}
         <title>Login</title>
@@ -44,7 +46,7 @@
 
                     <div class="p-2 py-4">
                         <form method="post" id="login-form">
-
+                            {% csrf_token %}
                             <input type="email" name="email" class="w-full bg-[#F3F7F8] h-10 border-opacity-60 border p-2 rounded text-sm my-2  focus:outline-blue-500" placeholder="Enter your email or mobile number">
 
                             <div class="password relative">
@@ -58,7 +60,7 @@
 
                         <span class="block text-center text-gray-500 text-sm font-semibold my-1">OR</span>
 
-                        <a href="{% url 'register' %}" class="underline text-[#295CAB] text-center block">Register</a>
+                        <a href="{% url 'register' %}?next={{request.GET.next}}" class="underline text-[#295CAB] text-center block">Register</a>
                     </div>
                 </div>
 

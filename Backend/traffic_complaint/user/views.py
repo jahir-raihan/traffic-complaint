@@ -1,9 +1,15 @@
+# Imports
+
 from django.contrib.auth import authenticate, login, get_user_model, logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-
+from ..complain.models import Complain
 from .forms import UserRegisterForm
+from django.views import View
+from django.db.models import Q
+
+# End Imports
 
 
 User = get_user_model()
@@ -18,7 +24,7 @@ def register_user(request):
     if request.user.is_authenticated and request.method == 'POST':
         return JsonResponse({'redirect': False})
     if request.user.is_authenticated:
-        return redirect('redirect_origin')
+        return redirect('home')
 
     # If request is post and user is not registered or logged in
     if request.method == 'POST' and not request.user.is_authenticated:
@@ -27,9 +33,7 @@ def register_user(request):
         form = UserRegisterForm(request.POST)
         if form.is_valid:
             form.save()
-            user = authenticate(request, email=form.cleaned_data['email'], password=request.POST['password1'])
-            login(request, user)
-            return JsonResponse({'success': True, 'redirect': '/'})
+            return JsonResponse({'success': True, 'redirect': '/auth/login/'})
         else:
             return JsonResponse({'error': True, 'form_errors': form.errors})
 
@@ -50,6 +54,7 @@ def login_user(request):
     # If user is not logged in then initiate login and redirect the user to base location where he came from
     if request.method == 'POST' and not request.user.is_authenticated:
         user = authenticate(request, email=request.POST['email'], password=request.POST['password'])
+
         if user:
             login(request, user)
             return JsonResponse({'success': True, 'redirect': '/'})
@@ -68,3 +73,28 @@ def logout_user(request):
 
     logout(request)
     return redirect('login')
+
+
+# Profile view
+
+class ProfileView(View):
+
+    """
+    View for users profile containing complaints outline and more.
+    """
+
+    template_name = 'profile.html'
+
+    def get(self, request):
+
+        """
+        Render profile page with all users complaints and their status
+
+        :param request:
+        :return:
+        """
+
+        complaints = Complain.objects.filter(
+            Q(user=request.user)
+        )
+        return render(request, self.template_name, {'complaints': complaints})

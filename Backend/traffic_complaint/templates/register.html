@@ -17,7 +17,9 @@
             <form id="register-form">
                 {% csrf_token %}
 
-                <input type="email" name="email" class="w-full bg-[#F3F7F8] h-10 border-opacity-60 border p-2 rounded text-sm my-2  focus:outline-blue-500" placeholder="Enter your email or mobile number">
+                <input type="text" name="name" class="w-full bg-[#F3F7F8] h-10 border-opacity-60 border p-2 rounded text-sm my-2  focus:outline-blue-500" placeholder="Enter your full name">
+                <input type="email" name="email" class="w-full bg-[#F3F7F8] h-10 border-opacity-60 border p-2 rounded text-sm my-2  focus:outline-blue-500" placeholder="Enter your email">
+                <input type="text" name="phone" class="w-full bg-[#F3F7F8] h-10 border-opacity-60 border p-2 rounded text-sm my-2  focus:outline-blue-500" placeholder="Enter your mobile number">
 
                 <div class="password relative">
                     <input type="password" name="password1" class="w-full bg-[#F3F7F8] h-10 border-opacity-60 border p-2 rounded text-sm my-2" placeholder="Enter your password">
@@ -30,7 +32,7 @@
             </form>
             <span class="block text-center text-gray-500 text-sm font-semibold my-1">OR</span>
 
-            <a href="{% url 'login' %}" class="underline text-[#295CAB] text-center block">Login</a>
+            <a href="{% url 'login' %}?next={{request.GET.next}}" class="underline text-[#295CAB] text-center block">Login</a>
         </div>
     </div>
 {% endblock form %}
