@@ -1,5 +1,8 @@
 import mimetypes
 from django.db import models
+from django.contrib.auth import  get_user_model
+
+User = get_user_model()
 
 
 class PoliceStation(models.Model):
@@ -38,6 +41,7 @@ class Complain(models.Model):
     complain_title = models.CharField(max_length=120, null=True, blank=True)
     status = models.SmallIntegerField(choices=COMPLAIN_STATUS, default=1)
     created_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return f'Complaint ID {self.id}. Title: {self.complain_title}'

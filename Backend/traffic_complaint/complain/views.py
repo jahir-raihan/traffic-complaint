@@ -6,6 +6,7 @@ from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import render
 from django.views import View
 from .models import PoliceStation, Attachment, Complain
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 
 # End Imports
@@ -32,7 +33,7 @@ class HomeView(View):
         return render(request, self.template_name, {})
 
 
-class ComplainWithAI(View):
+class ComplainWithAI(LoginRequiredMixin, View):
 
     """
     View for complaining using AI
@@ -56,7 +57,7 @@ class ComplainWithAI(View):
         return render(request, self.template_name, context)
 
 
-class ComplainView(View):
+class ComplainView(LoginRequiredMixin, View):
 
     """
     View for complaining manually
