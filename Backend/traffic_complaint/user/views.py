@@ -2,9 +2,10 @@
 
 from django.contrib.auth import authenticate, login, get_user_model, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-
+from complain.models import Complain
 from .forms import UserRegisterForm
 from django.views import View
 from django.db.models import Q
@@ -77,7 +78,7 @@ def logout_user(request):
 
 # Profile view
 
-class ProfileView(View):
+class ProfileView(LoginRequiredMixin, View):
 
     """
     View for users profile containing complaints outline and more.
@@ -94,5 +95,7 @@ class ProfileView(View):
         :return:
         """
 
-        complaints = []
+        complaints = Complain.objects.filter(
+            Q(user=request.user)
+        )
         return render(request, self.template_name, {'complaints': complaints})

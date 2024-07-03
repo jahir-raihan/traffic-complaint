@@ -137,7 +137,7 @@ class ComplainView(LoginRequiredMixin, View):
                 return JsonResponse({'message': 'An error occurred while creating attachments.', 'error': str(e)},
                                     status=500)
 
-        return JsonResponse({'success': True, 'message': 'Complaint filed successfully!'})
+        return JsonResponse({'success': True, 'message': 'Complaint filed successfully!', 'complaint_id': complain.id})
 
 
 class ComplainListNormalUser(View):

@@ -13,7 +13,7 @@
     <div id="success-message" class="w-full h-svh flex items-center justify-center hidden">
         <div>
             <p id="success-text" class="font-semibold text-green-600 text-center">Submitted Successfully !</p>
-            <a href="#">
+            <a id="redirect_to_complaint" href="#">
                 <button class="bg-white py-2 px-2 rounded-md w-full mt-3 hover:text-white hover:bg-slate-500">See your complaint</button>
             </a>
 
@@ -148,6 +148,8 @@
                 submit_btn.innerHTML = '<i class="fas fa-circle-notch"></i> Submit'
 
                 $('#success-text').html(response.message)
+
+                document.getElementById('redirect_to_complaint').href = '/list-complaints?complaint_id=' + response.complaint_id
 
             })
 
