@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, get_user_model, logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from ..complain.models import Complain
+
 from .forms import UserRegisterForm
 from django.views import View
 from django.db.models import Q
@@ -94,7 +94,5 @@ class ProfileView(View):
         :return:
         """
 
-        complaints = Complain.objects.filter(
-            Q(user=request.user)
-        )
+        complaints = []
         return render(request, self.template_name, {'complaints': complaints})
