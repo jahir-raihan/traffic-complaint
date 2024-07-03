@@ -49,58 +49,62 @@
 
         <div class=" w-full  text-white my-7" style="height:3px; background:white;"></div>
 
-        <div class="complaints-list w-full  m-auto">
+        <div class="complaints-list w-full  m-auto" style="min-height:40vh;">
             <ul class="w-full">
-                {% for complain in complaints %}
-                    <li class="w-full">
-                        <div class="complaint-card flex w-full justify-between items-center p-5 bg-slate-50 rounded-md shadow-sm shadow-slate-50 my-4 sm:flex">
+                {% if complaints %}
+                    {% for complain in complaints %}
+                        <li class="w-full">
+                            <div class="complaint-card flex w-full justify-between items-center p-5 bg-slate-50 rounded-md shadow-sm shadow-slate-50 my-4 sm:flex">
 
-                            <div class="complaint-card-left opacity-[.8]">
-                                <p><b>Complaint no:</b> {{complain.id}}</p>
-                                <p><b>Vehicle number:</b> {{complain.vehicle_number}}</p>
-                                <p><b>Location of crime:</b> {{complain.location}}</p>
-                                <p><b>Complaint time:</b> {{complain.created_at|date:"d M, Y - h:i A"}}</p>
+                                <div class="complaint-card-left opacity-[.8]">
+                                    <p><b>Complaint no:</b> {{complain.id}}</p>
+                                    <p><b>Vehicle number:</b> {{complain.vehicle_number}}</p>
+                                    <p><b>Location of crime:</b> {{complain.location}}</p>
+                                    <p><b>Complaint time:</b> {{complain.created_at|date:"d M, Y - h:i A"}}</p>
+                                </div>
+
+                                {% if request.user.is_police_officer %}
+
+                                    <div class="complaint-card-right text-center">
+                                        <p class="status font-medium">Actions</p>
+
+                                        <select name="status" id="status-1" class=" outline-none bg-orange-400 text-white p-2 px-5 rounded">
+                                            <option  value="1">Pending</option>
+                                            <option  value="2">Investigating</option>
+                                            <option value="2">Solved</option>
+                                            <option value="4">Archive</option>
+                                        </select>
+
+
+                                        <a href="{% url 'list_complaints_users' %}?page=1&complaint_id={{complain.id}}&station={{request.GET.station}}&search={{request.GET.search}}">
+                                           <button onclick="enable_modal('modal_id')" class="view-proof-btn bg-slate-500 p-2 px-5 rounded text-white hover:bg-slate-400 mt-4">
+                                                <i class="fas fa-receipt mr-1"></i>
+                                                View Details
+                                            </button>
+                                        </a>
+                                    </div>
+
+                                {% else %}
+
+                                    <div class="complaint-card-right text-center">
+                                        <p class="status font-medium">Status</p>
+                                        <p class="text-orange-400">{{complain.get_status_display}}</p>
+
+                                        <a href="{% url 'list_complaints_users' %}?page=1&complaint_id={{complain.id}}&station={{request.GET.station}}&search={{request.GET.search}}">
+                                           <button onclick="enable_modal('modal_id')" class="view-proof-btn bg-slate-500 p-2 px-5 rounded text-white hover:bg-slate-400 mt-4">
+                                                <i class="fas fa-receipt mr-1"></i>
+                                                View Details
+                                            </button>
+                                        </a>
+
+                                    </div>
+                                {% endif %}
                             </div>
-
-                            {% if request.user.is_police %}
-
-                                <div class="complaint-card-right text-center">
-                                    <p class="status font-medium">Actions</p>
-
-                                    <select name="status" id="status-1" class=" outline-none bg-orange-400 text-white p-2 px-5 rounded">
-                                        <option  value="1">Pending</option>
-                                        <option  value="2">Investigating</option>
-                                        <option value="2">Solved</option>
-                                        <option value="4">Archive</option>
-                                    </select>
-
-
-                                    <a href="{% url 'list_complaints_users' %}?page=1&complaint_id={{complain.id}}&station={{request.GET.station}}&search={{request.GET.search}}">
-                                       <button onclick="enable_modal('modal_id')" class="view-proof-btn bg-slate-500 p-2 px-5 rounded text-white hover:bg-slate-400 mt-4">
-                                            <i class="fas fa-receipt mr-1"></i>
-                                            View Details
-                                        </button>
-                                    </a>
-                                </div>
-
-                            {% else %}
-
-                                <div class="complaint-card-right text-center">
-                                    <p class="status font-medium">Status</p>
-                                    <p class="text-orange-400">{{complain.get_status_display}}</p>
-
-                                    <a href="{% url 'list_complaints_users' %}?page=1&complaint_id={{complain.id}}&station={{request.GET.station}}&search={{request.GET.search}}">
-                                       <button onclick="enable_modal('modal_id')" class="view-proof-btn bg-slate-500 p-2 px-5 rounded text-white hover:bg-slate-400 mt-4">
-                                            <i class="fas fa-receipt mr-1"></i>
-                                            View Details
-                                        </button>
-                                    </a>
-
-                                </div>
-                            {% endif %}
-                        </div>
-                    </li>
-                {% endfor %}
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <p style="color:white;font-weight:bold;">No Complaints!</p>
+                {% endif %}
 
             </ul>
         </div>
