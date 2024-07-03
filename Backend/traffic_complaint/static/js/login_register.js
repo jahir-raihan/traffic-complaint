@@ -3,7 +3,7 @@ $(document).on('submit', '#login-form', function(e){
 
     e.preventDefault();
 
-    let redirect_url, cart_items, wishlist_items;
+
     let login_btn = document.querySelector('.login-btn')
 
     // Login btn React on submit
@@ -13,6 +13,7 @@ $(document).on('submit', '#login-form', function(e){
     login_btn.style.opacity = '.8'
 
     var form_data = new FormData(document.getElementById('login-form'));
+    $('#error-message').html('')
 
 
     // Sending Request
@@ -37,13 +38,13 @@ $(document).on('submit', '#login-form', function(e){
 
             // Redirecting
 
-            window.location.href = '{{request.GET.next}}'
+            window.location.href = redirect_url
 
         }
         else {
             // If Account not found , show some alert on the window and reset the buttons
             login_btn.innerHTML = 'Login'
-
+            $('#error-message').html('No account found with given credentials!')
             login_btn.disabled = false
             login_btn.style.cursor = 'pointer'
 
@@ -59,6 +60,12 @@ $(document).on('submit', '#register-form', function(e){
     console.log("come here")
 
     e.preventDefault();
+
+    if ($('#pass1').val() !== $('#pass2')){
+
+        $('#error-message').html("Password didn't match!")
+        return
+    }
 
     let redirect_url;
     let register_btn = document.querySelector('.register-btn')
