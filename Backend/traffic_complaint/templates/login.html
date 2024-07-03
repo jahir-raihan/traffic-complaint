@@ -17,6 +17,9 @@
     <link rel="stylesheet" href="{% static 'css/raw_css.css' %}">
     <link rel="stylesheet" href="{% static 'css/login_registration.css' %}">
     <script src="{% static 'js/jquery.js' %}"></script>
+    <script>
+        let redirect_url = '{{request.GET.next}}'
+    </script>
     <script src="{% static 'js/login_register.js' %}"></script>
     
     {% block title %}
@@ -63,6 +66,8 @@
                         <a href="{% url 'register' %}?next={{request.GET.next}}" class="underline text-[#295CAB] text-center block">Register</a>
                     </div>
                 </div>
+
+                <p id="error-message" style="color:red; font-size:14px; margin:1em 0;"></p>
 
             {% endblock form %}
 

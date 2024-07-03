@@ -17,16 +17,16 @@
             <form id="register-form">
                 {% csrf_token %}
 
-                <input type="text" name="name" class="w-full bg-[#F3F7F8] h-10 border-opacity-60 border p-2 rounded text-sm my-2  focus:outline-blue-500" placeholder="Enter your full name">
-                <input type="email" name="email" class="w-full bg-[#F3F7F8] h-10 border-opacity-60 border p-2 rounded text-sm my-2  focus:outline-blue-500" placeholder="Enter your email">
-                <input type="text" name="phone" class="w-full bg-[#F3F7F8] h-10 border-opacity-60 border p-2 rounded text-sm my-2  focus:outline-blue-500" placeholder="Enter your mobile number">
+                <input type="text" name="name" required class="w-full bg-[#F3F7F8] h-10 border-opacity-60 border p-2 rounded text-sm my-2  focus:outline-blue-500" placeholder="Enter your full name">
+                <input type="email" name="email" required class="w-full bg-[#F3F7F8] h-10 border-opacity-60 border p-2 rounded text-sm my-2  focus:outline-blue-500" placeholder="Enter your email">
+                <input type="text" name="phone" required class="w-full bg-[#F3F7F8] h-10 border-opacity-60 border p-2 rounded text-sm my-2  focus:outline-blue-500" placeholder="Enter your mobile number">
 
                 <div class="password relative">
-                    <input type="password" name="password1" class="w-full bg-[#F3F7F8] h-10 border-opacity-60 border p-2 rounded text-sm my-2" placeholder="Enter your password">
+                    <input type="password" minlength="8" required id="pass1" name="password1" class="w-full bg-[#F3F7F8] h-10 border-opacity-60 border p-2 rounded text-sm my-2" placeholder="Enter your password">
 
                     <i class="fa fa-eye-slash password-eye absolute top-5 right-2 opacity-50 cursor-pointer hover:opacity-75"></i>
                 </div>
-                <input type="password" name="password2" class="w-full bg-[#F3F7F8] h-10 border-opacity-60 border p-2 rounded text-sm my-2" placeholder="Confirm password">
+                <input type="password" minlength="8" required id="pass2" name="password2" class="w-full bg-[#F3F7F8] h-10 border-opacity-60 border p-2 rounded text-sm my-2" placeholder="Confirm password">
 
                 <button class="bg-[#295CAB] w-full rounded text-sm font-semibold my-2 text-white p-2 register-btn" type="submit">Register</button>
             </form>
@@ -35,4 +35,6 @@
             <a href="{% url 'login' %}?next={{request.GET.next}}" class="underline text-[#295CAB] text-center block">Login</a>
         </div>
     </div>
+
+    <p id="error-message" style="color:red; font-size:14px; margin:1em 0;"></p>
 {% endblock form %}

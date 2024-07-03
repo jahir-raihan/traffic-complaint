@@ -1,40 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-        crossorigin="anonymous"
-        referrerpolicy="no-referrer"
-    />
-    <link rel="stylesheet" href="../css/output.css">
-    <link rel="stylesheet" href="../css/raw_css.css">
-</head>
-<body class="bg-[#494F55]">
+{% extends 'base.html' %}
 
-    <header id="header" class="bg-[#343A40] h-20">
-        <nav class="flex justify-between w-[90%] m-auto max-w-[1600px] h-[100%] items-center">
-            <div class="left-nav">
-                <div class="logo">
-                    <a href="index.html" class="font-medium text-white text-2xl" >Traffic <span class="text-red-400">Complaint</span></a>
-                </div>
-            </div>
+{% block title %}
+    Profile | Complaints
+{% endblock title %}
 
-            <div class="right-nav">
-            
-                <div class="nav-menus *:ml-4 *:cursor-pointer">
-                    <i class="fas fa-circle-info text-white text-2xl"></i>
-                    <a href="profile.html"><i class="fas fa-user text-white text-2xl"></i></a>
-                </div>
-            </div>
 
-        </nav>
-    </header>
+{% block logo %}
+    <a href="{% url 'home' %}" class="font-medium text-white text-2xl" >Traffic <span class="text-red-400">Complaint</span></a>
+{% endblock logo %}
 
+
+{% block container %}
     <div id="container" class="container w-[90%] max-w-[1600px]  m-auto">
         <div class="profile flex gap-[2%] items-start py-6 ">
 
@@ -46,101 +22,57 @@
                     
                     <p class="email text-white font-medium">anyfordkings3534@gmail.com</p>
                     <p class="email text-white font-medium "><span class="text-green-600 ">Total Complaints: </span> 24</p>
+                    <a href="{% url 'logout' %}">
+
+                        <button class=" bg-white py-2 px-4 rounded mt-3">
+                            <i class="fas fa-right-from-bracket"></i>
+                            Logout
+                        </button>
+                    </a>
+
                 </div>
                 
             </div>
 
             <div class="profile-right w-[69%]  sm:w-full h-fit">
                 <p class="title text-white font-semibold">Recent Complaints</p>
-                <ul class="w-full">
-                    <li class="w-full">
-                        <div class="complaint-card flex w-full justify-between items-center p-5 bg-slate-50 rounded-md shadow-sm shadow-slate-50 my-4 sm:flex">
-    
-                            <div class="complaint-card-left opacity-[.8]">
-                                <p><b>Complaing no:</b> 1213010318313</p>
-                                <p><b>Vehicle number:</b> 11-4565</p>
-                                <p><b>Location of crime:</b> Merul Badda, DIT Project Dhaka</p>
-                                <p><b>Complaint time:</b> 11 May, 2024 - 10:12 PM</p>
-                            </div>
-    
-                            <div class="complaint-card-right text-center">
-                                <p class="status font-medium">Status</p>
-                                <p class="text-orange-400">Investigating</p>
-    
-                                <button onclick="enable_modal('modal_id')" class="view-proof-btn bg-slate-500 p-2 px-5 rounded text-white hover:bg-slate-400 mt-4">
-                                    <i class="fas fa-receipt mr-1"></i>
-                                    View Details
-                                </button>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="w-full">
-                        <div class="complaint-card flex w-full justify-between items-center p-5 bg-slate-50 rounded-md shadow-sm shadow-slate-50 my-4 sm:flex">
-    
-                            <div class="complaint-card-left opacity-[.8]">
-                                <p><b>Complaing no:</b> 1213010318313</p>
-                                <p><b>Vehicle number:</b> 11-4565</p>
-                                <p><b>Location of crime:</b> Merul Badda, DIT Project Dhaka</p>
-                                <p><b>Complaint time:</b> 11 May, 2024 - 10:12 PM</p>
-                            </div>
-    
-                            <div class="complaint-card-right text-center">
-                                <p class="status font-medium">Status</p>
-                                <p class="text-orange-400">Investigating</p>
-    
-                                <button class="view-proof-btn bg-slate-500 p-2 px-5 rounded text-white hover:bg-slate-400 mt-4">
-                                    <i class="fas fa-receipt mr-1"></i>
-                                    View Details
-                                </button>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="w-full">
-                        <div class="complaint-card flex w-full justify-between items-center p-5 bg-slate-50 rounded-md shadow-sm shadow-slate-50 my-4 sm:flex">
-    
-                            <div class="complaint-card-left opacity-[.8]">
-                                <p><b>Complaing no:</b> 1213010318313</p>
-                                <p><b>Vehicle number:</b> 11-4565</p>
-                                <p><b>Location of crime:</b> Merul Badda, DIT Project Dhaka</p>
-                                <p><b>Complaint time:</b> 11 May, 2024 - 10:12 PM</p>
-                            </div>
-    
-                            <div class="complaint-card-right text-center">
-                                <p class="status font-medium">Status</p>
-                                <p class="text-orange-400">Investigating</p>
-    
-                                <button class="view-proof-btn bg-slate-500 p-2 px-5 rounded text-white hover:bg-slate-400 mt-4">
-                                    <i class="fas fa-receipt mr-1"></i>
-                                    View Details
-                                </button>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="w-full">
-                        <div class="complaint-card flex w-full justify-between items-center p-5 bg-slate-50 rounded-md shadow-sm shadow-slate-50 my-4 sm:flex">
-    
-                            <div class="complaint-card-left opacity-[.8]">
-                                <p><b>Complaing no:</b> 1213010318313</p>
-                                <p><b>Vehicle number:</b> 11-4565</p>
-                                <p><b>Location of crime:</b> Merul Badda, DIT Project Dhaka</p>
-                                <p><b>Complaint time:</b> 11 May, 2024 - 10:12 PM</p>
-                            </div>
-    
-                            <div class="complaint-card-right text-center">
-                                <p class="status font-medium">Status</p>
-                                <p class="text-orange-400">Investigating</p>
-    
-                                <button class="view-proof-btn bg-slate-500 p-2 px-5 rounded text-white hover:bg-slate-400 mt-4">
-                                    <i class="fas fa-receipt mr-1"></i>
-                                    View Details
-                                </button>
-                            </div>
-                        </div>
-                    </li>
-                   
+                <ul class="w-full" style="min-height:70vh;">
+                    {% if complaints %}
+                        {% for complain in complaints %}
+                            <li class="w-full">
+                                <div class="complaint-card flex w-full justify-between items-center p-5 bg-slate-50 rounded-md shadow-sm shadow-slate-50 my-4 sm:flex">
+
+                                    <div class="complaint-card-left opacity-[.8]">
+                                        <p><b>Complaint no:</b> {{complain.id}}</p>
+                                        <p><b>Vehicle number:</b> {{complain.vehicle_number}}</p>
+                                        <p><b>Location of crime:</b> {{complain.location}}</p>
+                                        <p><b>Complaint time:</b> {{complain.created_at|date:"d M, Y - h:i A"}}</p>
+                                    </div>
+
+
+
+                                    <div class="complaint-card-right text-center">
+                                        <p class="status font-medium">Status</p>
+                                        <p class="text-orange-400">{{complain.get_status_display}}</p>
+
+                                        <a href="{% url 'list_complaints_users' %}?page=1&complaint_id={{complain.id}}&station={{request.GET.station}}&search={{request.GET.search}}">
+                                           <button onclick="enable_modal('modal_id')" class="view-proof-btn bg-slate-500 p-2 px-5 rounded text-white hover:bg-slate-400 mt-4">
+                                                <i class="fas fa-receipt mr-1"></i>
+                                                View Details
+                                            </button>
+                                        </a>
+
+                                    </div>
+
+                                </div>
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <h4 style="color:white;margin-top:3em;font-weight:bold;">No Complaints!</h4>
+                    {% endif %}
                 </ul>
 
-                <a href="#" class="px-6 p-2 bg-blue-400 text-white rounded border-none hover:bg-slate-500 hover:text-white font-medium">
+                <a href="#" class="px-6 p-2 hidden bg-blue-400 text-white rounded border-none hover:bg-slate-500 hover:text-white font-medium">
                     <i class="fas fa-list mr-1"></i>
                     See all
                 </a>
@@ -149,7 +81,9 @@
         </div>
     </div>  
 
+{% endblock container %}
 
+{% block modal %}
     <div class="modal h-3/4 w-[70%] fixed top-[7.5em] p-4 left-[15%] z-[100] max-w[1400px] shadow-[#000000] shadow-2xl  rounded  bg-white hidden" id="modal_id">
         <div class="modal-header flex justify-between items-center">
             <p class="modal-title text-lg  opacity-8"><span class="font-medium">Complaint No:</span> 1213010318313</p>
@@ -177,10 +111,9 @@
 
     </div>
 
-    <footer class="w-90% m-auto my-[40px]">
-        <p class="text-white text-center font-semibold text-xs opacity-7">Copyright all rights reserved to <a target="_blank" href="https://github.com/jahir-raihan">@github.com/jahir-raihan</a> - 2024</p>
-    </footer>
+{% endblock modal %}
 
+{% block script %}
     <script>
        
        function disable_modal(modal_id){
@@ -197,6 +130,4 @@
            document.getElementById('footer').classList.add('blur-sm')
        }
        </script>
-    
-</body>
-</html>
+{% endblock script %}
