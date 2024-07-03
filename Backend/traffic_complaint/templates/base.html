@@ -21,6 +21,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.min.css" integrity="sha512-wCrId7bUEl7j1H60Jcn4imkkiIYRcoyq5Gcu3bpKAZYBJXHVMmkL4rhtyhelxSFuPMIoQjiVsanrHxcs2euu/w==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="{% static 'css/raw_css.css' %}">
+    {% block top_js %} {% endblock top_js %}
 </head>
 <body class="bg-[#494F55]">
 
@@ -39,9 +40,16 @@
                 <div class="nav-menus *:ml-4 *:cursor-pointer">
                     <i class="fas fa-circle-info text-white text-2xl"></i>
 
-                    <a href="{% url 'login' %}">
-                        <i class="fas fa-sign-in text-white text-2xl"></i>
-                    </a>
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'profile' %}">
+                            <i class="fas fa-user text-white text-2xl"></i>
+                        </a>
+                    {% else %}
+                        <a href="{% url 'login' %}">
+                            <i class="fas fa-sign-in text-white text-2xl"></i>
+                        </a>
+                    {% endif %}
+
 
                 </div>
             </div>
