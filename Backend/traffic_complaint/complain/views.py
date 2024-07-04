@@ -200,7 +200,7 @@ class ComplainList(View):
         # Render the template with the paginated complaints and or complaint
         return render(request, self.template_name, context)
 
-    def post(self, request):
+    def post(self, request, pk):
 
         """
         Update an complaint status
@@ -211,7 +211,7 @@ class ComplainList(View):
 
         if request.user.is_police_officer:
             data = request.POST
-            complaint_id = data.get('complaint_id')
+            complaint_id = pk
             status = data.get('status')
 
             complaint = Complain.objects.filter(pk=complaint_id).first()

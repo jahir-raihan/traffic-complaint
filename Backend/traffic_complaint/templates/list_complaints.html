@@ -68,11 +68,11 @@
                                     <div class="complaint-card-right text-center">
                                         <p class="status font-medium">Actions</p>
 
-                                        <select name="status" onchange="change_status(this, {{complain.id}})" id="status-{{complain.id}}" class=" outline-none bg-orange-400 text-white p-2 px-5 rounded">
-                                            <option  value="1">Pending</option>
-                                            <option  value="2">Investigating</option>
-                                            <option value="2">Solved</option>
-                                            <option value="4">Archive</option>
+                                        <select name="status" onchange="change_status(this, {{complain.id}})" id="status-{{complain.id}}" data-prev-{{complain.id}}="{{complain.status}}" class=" outline-none bg-orange-400 text-white p-2 px-5 rounded">
+                                            <option {% if complain.status == 1 %} selected {% endif %}  value="1">Pending</option>
+                                            <option {% if complain.status == 2 %} selected {% endif %} value="2">Investigating</option>
+                                            <option {% if complain.status == 3 %} selected {% endif %} value="3">Solved</option>
+                                            <option {% if complain.status == 4 %} selected {% endif %} value="4">Archive</option>
                                         </select>
 
 
@@ -182,8 +182,8 @@
             const newStatus = element.value;
 
             // Preserve the previous value
-            const previousValue = $(element).data('prev') || element.defaultValue
-            console.log(previousValue)
+            const previousValue = element.getAttribute('data-prev-'+complainId)
+            console.log('previousValue', previousValue)
 
             // Show a SweetAlert2 confirmation dialog
             Swal.fire({
@@ -195,24 +195,24 @@
                 cancelButtonText: 'No, keep it'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // If confirmed, send the AJAX request to update the status in the backend
+
                     $.ajax({
-                        url: `/update-status/${complainId}`, // Replace with your actual backend URL
-                        type: 'POST', // or 'PUT' depending on your backend implementation
-                        data: JSON.stringify({ status: newStatus }), // Data to be sent
-                        contentType: 'application/json', // Send data as JSON
+                        url: `/update-complaint-status/${complainId}`,
+                        type: 'post',
+                        data: {
+                             status: newStatus,
+                             csrfmiddlewaretoken: "{{csrf_token}}"
+                        },
                         success: function(response) {
-                            // Handle the success response
+                            element.setAttribute('data-prev-'+complainId, newStatus)
                             toastr.success('Status updated successfully!', 'Success');
                         },
-                        error: function(xhr, status, error) {
-                            // Handle the error response
+                        error: function(data) {
                             toastr.error('Failed to update status. Please try again.', 'Error');
                         }
                     });
                 } else {
-                    // If cancelled, revert to the previous value
-
+                    element.value = previousValue;
                 }
             });
 
