@@ -140,7 +140,7 @@ class ComplainView(LoginRequiredMixin, View):
         return JsonResponse({'success': True, 'message': 'Complaint filed successfully!', 'complaint_id': complain.id})
 
 
-class ComplainListNormalUser(View):
+class ComplainList(View):
 
     """
     View for listing out complains to normal users.
@@ -199,4 +199,28 @@ class ComplainListNormalUser(View):
 
         # Render the template with the paginated complaints and or complaint
         return render(request, self.template_name, context)
+
+    def post(self, request):
+
+        """
+        Update an complaint status
+
+        :param request:
+        :return:
+        """
+
+        if request.user.is_police_officer:
+            data = request.POST
+            complaint_id = data.get('complaint_id')
+            status = data.get('status')
+
+            complaint = Complain.objects.filter(pk=complaint_id).first()
+            if complaint:
+                complaint.status = int(status)
+                complaint.save()
+
+                return JsonResponse({"message": "Status updated successfully!"})
+            return JsonResponse({"message": "No complaint found!"})
+
+        return JsonResponse({"message": "You don't have permissions!"})
 

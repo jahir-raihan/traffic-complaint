@@ -68,7 +68,7 @@
                                     <div class="complaint-card-right text-center">
                                         <p class="status font-medium">Actions</p>
 
-                                        <select name="status" id="status-1" class=" outline-none bg-orange-400 text-white p-2 px-5 rounded">
+                                        <select name="status" onchange="change_status(this, {{complain.id}})" id="status-{{complain.id}}" class=" outline-none bg-orange-400 text-white p-2 px-5 rounded">
                                             <option  value="1">Pending</option>
                                             <option  value="2">Investigating</option>
                                             <option value="2">Solved</option>
@@ -175,6 +175,49 @@
             document.getElementById('header').classList.add('blur-sm')
             document.getElementById('container').classList.add('blur-sm')
             document.getElementById('footer').classList.add('blur-sm')
+        }
+
+        function change_status(element, complainId) {
+            // Get the new status value from the select element
+            const newStatus = element.value;
+
+            // Preserve the previous value
+            const previousValue = $(element).data('prev') || element.defaultValue
+            console.log(previousValue)
+
+            // Show a SweetAlert2 confirmation dialog
+            Swal.fire({
+                title: 'Are you sure?',
+                text: `Do you want to change the status to "${$(element).find("option:selected").text()}"?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, update it!',
+                cancelButtonText: 'No, keep it'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // If confirmed, send the AJAX request to update the status in the backend
+                    $.ajax({
+                        url: `/update-status/${complainId}`, // Replace with your actual backend URL
+                        type: 'POST', // or 'PUT' depending on your backend implementation
+                        data: JSON.stringify({ status: newStatus }), // Data to be sent
+                        contentType: 'application/json', // Send data as JSON
+                        success: function(response) {
+                            // Handle the success response
+                            toastr.success('Status updated successfully!', 'Success');
+                        },
+                        error: function(xhr, status, error) {
+                            // Handle the error response
+                            toastr.error('Failed to update status. Please try again.', 'Error');
+                        }
+                    });
+                } else {
+                    // If cancelled, revert to the previous value
+
+                }
+            });
+
+            // Store the current value as previous for the next change event
+            $(element).data('prev', newStatus);
         }
 
     </script>
