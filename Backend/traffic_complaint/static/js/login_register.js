@@ -61,7 +61,7 @@ $(document).on('submit', '#register-form', function(e){
 
     e.preventDefault();
 
-    if ($('#pass1').val() !== $('#pass2')){
+    if ($('#pass1').val() !== $('#pass2').val()){
 
         $('#error-message').html("Password didn't match!")
         return

@@ -49,6 +49,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "middleware.police_officer_redirect_middleware.PoliceOfficerRedirectMiddleware"
 ]
 
 ROOT_URLCONF = "traffic_complaint.urls"
