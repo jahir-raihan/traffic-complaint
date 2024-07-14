@@ -98,4 +98,15 @@ class ProfileView(LoginRequiredMixin, View):
         complaints = Complain.objects.filter(
             Q(user=request.user)
         )
-        return render(request, self.template_name, {'complaints': complaints})
+
+        # If someone redirects to this page for opening a complaint
+        complaint = request.GET.get('complaint_id')
+        if complaint:
+            complaint = Complain.objects.filter(pk=complaint).first()
+
+        context = {
+            'complaints': complaints,
+            'complaints_count': len(complaints),
+            'complaint': complaint
+        }
+        return render(request, self.template_name, context)
