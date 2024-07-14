@@ -36,6 +36,13 @@
     
 }
 
+.swal2-confirm{
+    background:#3a869f;
+}
+
+.swal2-cancel{
+    background:gray;
+}
 
 .input{
 
