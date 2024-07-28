@@ -47,7 +47,7 @@ class ComplainWithAI(LoginRequiredMixin, View):
         Render page and chat functionality to complain with ai
 
         :param request:
-        :return:
+        :return HTTPResponse:
         """
 
         context = {
