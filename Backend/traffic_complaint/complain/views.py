@@ -56,6 +56,23 @@ class ComplainWithAI(LoginRequiredMixin, View):
 
         return render(request, self.template_name, context)
 
+    def post(self, request):
+
+        """
+        Handle chat with gemini for user to complaint without filling out form
+
+        :param request:
+        :return:
+        """
+
+        data = request.POST
+        file = request.FILE
+
+        print(data, file)
+
+        return JsonResponse({"response": "Ai Generated Text about message files!"})
+
+
 
 class ComplainView(LoginRequiredMixin, View):
 
