@@ -110,6 +110,7 @@
 {% endblock modal %}
 
 {% block script %}
+    <script src="https://cdn.jsdelivr.net/npm/showdown/dist/showdown.min.js"></script>
     <script>
         // JavaScript for handling file preview and modal display
 
@@ -230,7 +231,9 @@
             
             let text = document.getElementById('chat-text')
             let modal_body = document.getElementById('modal-body')
-            let temp_text = text
+            let temp_text = text.value.trim()
+
+
 
             if (text.value.trim().length > 0){
                 let file_url = null;
@@ -286,9 +289,10 @@
             });
 
             // On request success
-            req.done(function(response){
-                console.log("Submitted")
-                render_ai_chat(response.response)
+            req.done(function(data){
+                let converter = new showdown.Converter();
+                let html = converter.makeHtml(data.response);
+                render_ai_chat(html)
             })
             response = 'some big text that the ai will write'
 

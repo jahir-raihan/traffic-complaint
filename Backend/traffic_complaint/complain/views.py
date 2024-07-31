@@ -5,9 +5,14 @@ from django.db import transaction
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import render
 from django.views import View
+
+from .helper.helpers import to_markdown
 from .models import PoliceStation, Attachment, Complain
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
+
+import google.generativeai as genai
+
 
 # End Imports
 
@@ -66,11 +71,16 @@ class ComplainWithAI(LoginRequiredMixin, View):
         """
 
         data = request.POST
-        file = request.FILE
+        file = request.FILES
 
-        print(data, file)
+        GOOGLE_API_KEY = ''
+        genai.configure(api_key=GOOGLE_API_KEY)
 
-        return JsonResponse({"response": "Ai Generated Text about message files!"})
+        model = genai.GenerativeModel('gemini-1.5-flash')
+        chat = model.start_chat(history=[])
+        message = chat.send_message(data.get('chat_text') + ": Your response should contain a reference of the author.")
+
+        return JsonResponse({"response": message.text})
 
 
 class ComplainView(LoginRequiredMixin, View):
