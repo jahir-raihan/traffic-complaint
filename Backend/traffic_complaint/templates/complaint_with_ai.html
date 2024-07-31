@@ -92,7 +92,7 @@
                     </button>
                 </div>
                 
-                
+
                 
 
                 <div class="attach ml-4 relative hover:bg-[#626e79] bg-[#343A40] w-[20%] rounded-[8px]">
@@ -101,6 +101,9 @@
                     </button>
                 </div>
             </div>
+            <form id="chat_form_gemini">
+                {% csrf_token %}
+            </form>
         </div>
     </div>
 
@@ -263,12 +266,13 @@
 
         function submitToGemini(chat_text){
 
-            let form_data = new FormData();
-            data.append('chat_text', chat_text);
+            let form_data = new FormData($('#chat_form_gemini').get(0));
+            form_data.append('chat_text', chat_text);
             
             if (current_file){
-                data.append('file', current_file)
+                form_data.append('file', current_file)
             }
+
 
             // part for submitting to backend
              let req = $.ajax({

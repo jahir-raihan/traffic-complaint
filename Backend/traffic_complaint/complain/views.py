@@ -73,7 +73,6 @@ class ComplainWithAI(LoginRequiredMixin, View):
         return JsonResponse({"response": "Ai Generated Text about message files!"})
 
 
-
 class ComplainView(LoginRequiredMixin, View):
 
     """
