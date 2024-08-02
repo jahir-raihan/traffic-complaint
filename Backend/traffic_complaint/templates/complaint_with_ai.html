@@ -130,6 +130,7 @@
                 if (file) {
                     current_file = file;
                     const fileURL = URL.createObjectURL(current_file);
+                    console.log("one ->",current_file, fileURL);
                     
 
                     // Create and append the appropriate element (image or video)
@@ -246,6 +247,7 @@
 
                 if (current_file){
                     file_url =  URL.createObjectURL(current_file);
+                    console.log("two ->", current_file, file_url);
                     
                 }
                 console.log(is_video, file_url)
@@ -253,11 +255,12 @@
                 let template_node = get_human_chat_template(text.value.trim(), file_url, is_video)
                 modal_body.appendChild(template_node)
                 text.value = ''
-                close_preview()
+
 
                 auto_scroll()
 
                 submitToGemini(temp_text)
+                close_preview()
             }
 
         }
@@ -271,6 +274,8 @@
 
             let form_data = new FormData($('#chat_form_gemini').get(0));
             form_data.append('chat_text', chat_text);
+
+             console.log("three ->", current_file);
             
             if (current_file){
                 form_data.append('file', current_file)
@@ -307,7 +312,7 @@
 
             let template = `
 
-                <div class="w-[40px] h-[40px] bg-[#494F55] rounded-[50%] flex justify-center items-center mr-1">
+                <div style="min-width:40px" class="w-[40px] h-[40px] bg-[#494F55] rounded-[50%] flex justify-center items-center mr-1">
                     <i class="fas fa-robot text-white"></i>
                 </div>
 

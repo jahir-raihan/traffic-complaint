@@ -12,7 +12,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 
 import google.generativeai as genai
-
+from django.core.cache import cache
+from PIL import Image
+import io
 
 # End Imports
 
@@ -73,12 +75,32 @@ class ComplainWithAI(LoginRequiredMixin, View):
         data = request.POST
         file = request.FILES
 
+
         GOOGLE_API_KEY = ''
         genai.configure(api_key=GOOGLE_API_KEY)
 
         model = genai.GenerativeModel('gemini-1.5-flash')
-        chat = model.start_chat(history=[])
-        message = chat.send_message(data.get('chat_text') + ": Your response should contain a reference of the author.")
+        cached_chat_data = cache.get('default_cache_key')
+        if cached_chat_data:
+            chat = model.start_chat(history=cached_chat_data['history'])
+        else:
+            chat = model.start_chat(history=[])
+            cache.set('default_cache_key', {'history': chat.history}, 60 * 10)
+
+        if 'file' in file:
+            # Open the image using PIL
+            image = Image.open(file.get('file'))
+
+            # Create the message to send with the image and text
+            message = chat.send_message([
+                image,
+                data.get('chat_text')
+            ])
+        else:
+            message = chat.send_message(data.get('chat_text'))
+
+        # Update the cache with the new chat history
+        cache.set('default_cache_key', {'history': chat.history}, 60 * 10)
 
         return JsonResponse({"response": message.text})
 
