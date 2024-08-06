@@ -63,6 +63,15 @@ class ComplainWithAI(LoginRequiredMixin, View):
 
         return render(request, self.template_name, context)
 
+    def generate_complaint(self, chat):
+        """
+        Generate the final complaint in json format to store in the database
+
+        :param chat:
+        :return:
+        """
+        return 0, False, "description"
+
     def post(self, request):
 
         """
@@ -75,7 +84,6 @@ class ComplainWithAI(LoginRequiredMixin, View):
         data = request.POST
         file = request.FILES
 
-
         GOOGLE_API_KEY = ''
         genai.configure(api_key=GOOGLE_API_KEY)
 
@@ -86,6 +94,20 @@ class ComplainWithAI(LoginRequiredMixin, View):
         else:
             chat = model.start_chat(history=[])
             cache.set('default_cache_key', {'history': chat.history}, 60 * 10)
+
+        if data.get('submit', 'false') == 'true':
+            complaint, is_error, field_name = self.generate_complaint(chat)
+            complaint_id = None
+            redirect_url = ''
+
+            if is_error:
+                return JsonResponse(
+                    {
+                        "response": f"Please provide some more information on the {field_name}",
+                        'status': False,
+                        'redirect': redirect_url
+                    }
+                )
 
         if 'file' in file:
             # Open the image using PIL
@@ -102,7 +124,7 @@ class ComplainWithAI(LoginRequiredMixin, View):
         # Update the cache with the new chat history
         cache.set('default_cache_key', {'history': chat.history}, 60 * 10)
 
-        return JsonResponse({"response": message.text})
+        return JsonResponse({"response": message.text, 'status': True})
 
 
 class ComplainView(LoginRequiredMixin, View):

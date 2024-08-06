@@ -19,7 +19,7 @@
             <form method="get" action="?page=1&complaint_id=">
                 <div class="input">
                     <label for="" class="text-white font-medium block mb-2">Police Station</label>
-                    <select name="station" id="police_station" class="border-none w-full  p-4 opacity-[0.8] outline-none">
+                    <select name="station" id="police_station" class="border-none w-full   opacity-[0.8] outline-none">
                         <option value="">Search Police Station</option>
                         {% for station in stations %}
                             {% if request.GET.station == station.id|slugify %}

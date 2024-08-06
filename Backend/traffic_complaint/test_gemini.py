@@ -4,7 +4,6 @@ import textwrap
 
 import google.generativeai as genai
 
-from IPython.display import display
 from IPython.display import Markdown
 
 
@@ -13,7 +12,7 @@ def to_markdown(text: str):
     return Markdown(textwrap.indent(text, '> ', predicate=lambda _: True))
 
 
-GOOGLE_API_KEY = ''
+GOOGLE_API_KEY = 'AIzaSyAGSVBzyk8pyDehTmNYCM4xaTVNpILnJmA'
 
 genai.configure(api_key=GOOGLE_API_KEY)
 
