@@ -271,7 +271,8 @@
         }
 
         function submit(){
-            submitToGemini("submit", true)
+            submitToGemini(document.getElementById('chat-text').value.trim(), true)
+            document.getElementById('chat-text').value = ''
         }
 
         function submitToGemini(chat_text, submit){

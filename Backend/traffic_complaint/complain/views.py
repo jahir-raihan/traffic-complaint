@@ -1,4 +1,6 @@
 # Imports
+import json
+
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db import transaction
@@ -70,7 +72,34 @@ class ComplainWithAI(LoginRequiredMixin, View):
         :param chat:
         :return:
         """
-        return 0, False, "description"
+
+        requirements = ("Generate a complaint out of the texts you've received and the chat you had with me."
+                        "The complaint should contain fields including [location, vehicle_number[optional], "
+                        "complain_details, complain_title, complete_status]. And if any field is missing you may set"
+                        "the complete status false and add a new field of list named: missing_fields  containing "
+                        "all the missing fields. And the output format should be in JSON.")
+
+        response = {}
+        missing_fields = []
+        is_error = True
+        status = True
+        while is_error:
+            try:
+                message = chat.send_message("Please generate the JSON again, there's something went"
+                                            " wrong with the format")
+                response = json.loads(message.text)
+                is_error = False
+
+                missing_fields = response['missing_fields']
+                status = response['complete_status']
+            except:
+                pass
+
+        if 'complete_status' in response and response['complete_status']:
+            # Create compliant object here
+            pass
+
+        return 0, status, missing_fields
 
     def post(self, request):
 
@@ -84,7 +113,7 @@ class ComplainWithAI(LoginRequiredMixin, View):
         data = request.POST
         file = request.FILES
 
-        GOOGLE_API_KEY = ''
+        GOOGLE_API_KEY = 'AIzaSyAGSVBzyk8pyDehTmNYCM4xaTVNpILnJmA'
         genai.configure(api_key=GOOGLE_API_KEY)
 
         model = genai.GenerativeModel('gemini-1.5-flash')
@@ -96,16 +125,26 @@ class ComplainWithAI(LoginRequiredMixin, View):
             cache.set('default_cache_key', {'history': chat.history}, 60 * 10)
 
         if data.get('submit', 'false') == 'true':
-            complaint, is_error, field_name = self.generate_complaint(chat)
+            complaint, status, fields_name = self.generate_complaint(chat)
             complaint_id = None
             redirect_url = ''
 
-            if is_error:
+            if not status:
                 return JsonResponse(
                     {
-                        "response": f"Please provide some more information on the {field_name}",
-                        'status': False,
+                        "response": f"Please provide some more information on these fields: {fields_name}",
+                        'status': status,
                         'redirect': redirect_url
+                    }
+                )
+            else:
+                return JsonResponse(
+                    {
+                        "response": f"Thank you for your time. Your complaint has been registered! You will be"
+                                    f" redirected to the complaint shortly!",
+                        'status': status,
+                        'redirect': redirect_url,
+                        'complaint_id': complaint_id
                     }
                 )
 
