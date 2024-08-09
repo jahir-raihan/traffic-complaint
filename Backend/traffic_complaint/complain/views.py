@@ -8,6 +8,7 @@ from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import render, redirect, reverse
 from django.views import View
 
+from decouple import config
 from .helper.helpers import to_markdown
 from .models import PoliceStation, Attachment, Complain
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -160,7 +161,7 @@ class ComplainWithAI(LoginRequiredMixin, View):
         data = request.POST
         file = request.FILES
 
-        GOOGLE_API_KEY = ''
+        GOOGLE_API_KEY = config('GOOGLE_API_KEY')
         genai.configure(api_key=GOOGLE_API_KEY)
 
         model = genai.GenerativeModel('gemini-1.5-flash')
