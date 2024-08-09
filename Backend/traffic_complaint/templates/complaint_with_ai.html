@@ -18,9 +18,9 @@
                         <i class="fa-solid fa-image"></i> Uploading Image
                         <input type="file" style="cursor:pointer !important" title="" class="h-full top-0 w-full cursor-pointer absolute left-0 opacity-0" id="complaint-image" accept="image/*">
                     </button>
-                    <button class="bg-[#4e7280] cursor-pointer relative w-full sm:w-[220px] text-white font-semibold shadow-[#00000094] shadow-sm block p-3 sm:pr-7 hover:scale-105 transition rounded-[8px] sm:rounded-l-none">
-                        <i class="fa-solid fa-file-video"></i> Uploading Video
-                        <input type="file" title="" style="cursor:pointer !important" class="h-full top-0 cursor-pointer w-full absolute left-0 opacity-0" id="complaint-video" accept="video/mp4,video/mkv,video/x-m4v,video/*">
+                    <button disabled style="background:gray" class="bg-[#4e7280] cursor-pointer relative w-full sm:w-[220px] text-white font-semibold shadow-[#00000094] shadow-sm block p-3 sm:pr-7 hover:scale-105 transition rounded-[8px] sm:rounded-l-none">
+                        <i class="fa-solid fa-file-video"></i> Coming soon..
+                        <input type="file" title="" disabled style="cursor:pointer !important" class="h-full top-0 cursor-pointer w-full absolute left-0 opacity-0" id="complaint-video" accept="video/mp4,video/mkv,video/x-m4v,video/*">
                     </button>
                 </div>
             </div>
@@ -40,7 +40,7 @@
             <p class="modal-title text-lg opacity-8"><span class="font-medium"></span></p>
             <i onclick="disable_modal('modal_id')" class="fas fa-xmark rounded bg-[#343A40] text-white cursor-pointer shadow flex justify-center items-center h-[30px] w-[30px]"></i>
         </div>
-        <div class="modal-body mt-5 h-[82%]     border-t-2 overflow-y-scroll p-2" id="modal-body">
+        <div class="modal-body mt-5 h-[82%]     border-t-2 overflow-y-scroll p-2" id="modal-body" style="overflow-x:hidden">
             
          
             
@@ -59,10 +59,10 @@
                         <input type="file" id="complaint-image" accept="image/*" style="display: none;">
 
                         <!-- Video Upload Button -->
-                        <label for="complaint-video" class="relative  sm:w-[150px] text-white font-normal tracking-wide block p-2  hover:bg-[#343A40] transition rounded-[4px]  cursor-pointer">
-                            <i class="fa-solid fa-file-video w-[20px]"></i> Upload Video
-                        </label>
-                        <input type="file" id="complaint-video" accept="video/mp4,video/mkv,video/x-m4v,video/*" style="display: none;">
+<!--                        <label style="background:gray" for="complaint-video" class="relative  sm:w-[150px] text-white font-normal tracking-wide block p-2  hover:bg-[#343A40] transition rounded-[4px]  cursor-pointer">-->
+<!--                            <i class="fa-solid fa-file-video w-[20px]"></i> Coming soon..-->
+<!--                        </label>-->
+<!--                        <input type="file" id="complaint-video" accept="video/mp4,video/mkv,video/x-m4v,video/*" style="display: none;" disabled>-->
                     </div>
 
                     <div id="preview" class="image-preview w-[250px] rounded-[4px] rounded-b-none shadow-xl absolute bottom-[50px] left-[55px] p-4 bg-[#6f757b] hidden">
@@ -83,7 +83,7 @@
 
                 <div class="w-[75%]">
 
-                    <input type="text" autocomplete="off" id="chat-text" class="h-[50px] border border-l-0 border-[#00000052] outline-none px-4 rounded-r-none   rounded-l-none rounded-[8px] w-full" placeholder="Chat with Gemini . . .">
+                    <input type="text" autocomplete="off" id="chat-text" class="h-[50px] border border-l-0 border-[#00000052] outline-none px-4 rounded-r-none   rounded-l-none rounded-[8px] w-full" value="Write me an complaint for this vehicle traffic rules violations!" placeholder="Chat with Gemini . . .">
                 </div>
 
                 <div class="attach relative hover:bg-[#626e79] bg-[#343A40] rounded-l-none rounded-[8px]">
@@ -306,8 +306,13 @@
                 let converter = new showdown.Converter();
                 let html = converter.makeHtml(data.response);
                 render_ai_chat(html)
+                console.log(data)
                 if (data.status){
-
+                    disable_modal("modal_id");
+                    var baseUrl = "{% url 'list_complaints_users' %}";
+                    var complaintId = data['complaint_id'];
+                    var redirectUrl = baseUrl + '?complaint_id=' + encodeURIComponent(complaintId);
+                    window.location.href = redirectUrl;
                 }
             })
 
@@ -320,6 +325,7 @@
 
             let ai_chat_div = document.createElement('div')
             ai_chat_div.classList.add('ai-chat', 'my-4', 'flex', 'justify-start')
+            ai_chat_div.style.overflowX = 'scroll'
 
             let template = `
 

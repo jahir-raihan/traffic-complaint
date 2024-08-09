@@ -134,14 +134,14 @@
                 <p class="text-lg font-medium opacity-8 mb-2">Image(s) or Video</p>
                 {% for file in complaint.attachment.all %}
 
-                    {% if file.is_image %}
-                        <img class="h-[300px] object-cover my-3" src="{{ file.file }}">
-                    {% elif file.is_video %}
-                        <video class="h-[300px] object-cover my-3" controls>
-                            <source src="{{ file.file }}" type="{{ file.content_type }}">
-                            Your browser does not support the video tag.
-                        </video>
-                    {% endif %}
+<!--                    {% if file.is_image %}-->
+                    <img class="h-[300px] object-cover my-3" src="{{ file.file.url }}">
+<!--                    {% elif file.is_video %}-->
+<!--                        <video class="h-[300px] object-cover my-3" controls>-->
+<!--                            <source src="{{ file.file }}" type="{{ file.content_type }}">-->
+<!--                            Your browser does not support the video tag.-->
+<!--                        </video>-->
+<!--                    {% endif %}-->
                 {% endfor %}
 
             </div>

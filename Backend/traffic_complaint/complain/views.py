@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db import transaction
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from django.views import View
 
 from .helper.helpers import to_markdown
@@ -17,6 +17,7 @@ import google.generativeai as genai
 from django.core.cache import cache
 from PIL import Image
 import io
+from .helper.helpers import extract_images
 
 # End Imports
 
@@ -65,41 +66,87 @@ class ComplainWithAI(LoginRequiredMixin, View):
 
         return render(request, self.template_name, context)
 
-    def generate_complaint(self, chat):
+    def get_requirements(self, attached_text: str) -> str:
+
+        """
+        Return the requirements text containing commands
+
+        :return:
+        """
+
+        requirements = ("Generate a complaint out of the texts you've received and the chat you had with me. And the "
+                        "Images / Videos I gave. "
+                        "The complaint should contain fields including [location, vehicle_number[optional], "
+                        "complain_details, complain_title, complete_status]. And if any field is missing you may set"
+                        "the complete status false and add a new field of list named: missing_fields  containing "
+                        "all the missing fields. And the output format should be in JSON") + attached_text
+
+        return requirements
+
+    def generate_complaint(self, chat, user):
         """
         Generate the final complaint in json format to store in the database
 
         :param chat:
+        :param user:
         :return:
         """
 
-        requirements = ("Generate a complaint out of the texts you've received and the chat you had with me."
-                        "The complaint should contain fields including [location, vehicle_number[optional], "
-                        "complain_details, complain_title, complete_status]. And if any field is missing you may set"
-                        "the complete status false and add a new field of list named: missing_fields  containing "
-                        "all the missing fields. And the output format should be in JSON.")
+        requirements = self.get_requirements("Avoid json prefix as it throws error while converting to native"
+                                             "python dict object")
 
         response = {}
         missing_fields = []
-        is_error = True
         status = True
-        while is_error:
+        complaint_id = None
+
+        for _ in range(3):
             try:
-                message = chat.send_message("Please generate the JSON again, there's something went"
-                                            " wrong with the format")
+                message = chat.send_message(requirements)
                 response = json.loads(message.text)
-                is_error = False
-
-                missing_fields = response['missing_fields']
+                missing_fields = response['missing_fields'] if 'missing_fields' in response else []
                 status = response['complete_status']
+
+                break
             except:
-                pass
+                requirements = self.get_requirements("Please generate the complaint again in JSON format without"
+                                                     "using json prefix , because it throws JSONEncode error while"
+                                                     "converting to native python dict object.")
 
-        if 'complete_status' in response and response['complete_status']:
+        if status:
             # Create compliant object here
-            pass
 
-        return 0, status, missing_fields
+            complaint = Complain(
+                location=response['location'],
+                vehicle_number=response['vehicle_number'],
+                complain_details=response['complain_details'],
+                complain_title=response['complain_title'],
+                user=user
+            )
+
+            police_station = PoliceStation.objects.filter(
+                Q(station_name__icontains=response['location']) |
+                Q(city__icontains=response['location']) |
+                Q(division__icontains=response['location']) |
+                Q(area__icontains=response['location'])
+            ).first()
+
+            complaint.station = police_station
+            complaint.save()
+            complaint_id = complaint.id
+
+            # Link all attachments so far
+            attachment_id_cache_key = f'attachment_cache_{user.id}'
+            cached_data = cache.get(attachment_id_cache_key)
+
+            for a_id in cached_data:
+                attachment_data = Attachment.objects.get(id=a_id)
+                attachment_data.complain = complaint
+                attachment_data.save()
+
+            cache.set(attachment_id_cache_key, [], 10)
+
+        return complaint_id, status, missing_fields
 
     def post(self, request):
 
@@ -113,7 +160,7 @@ class ComplainWithAI(LoginRequiredMixin, View):
         data = request.POST
         file = request.FILES
 
-        GOOGLE_API_KEY = 'AIzaSyAGSVBzyk8pyDehTmNYCM4xaTVNpILnJmA'
+        GOOGLE_API_KEY = ''
         genai.configure(api_key=GOOGLE_API_KEY)
 
         model = genai.GenerativeModel('gemini-1.5-flash')
@@ -125,45 +172,61 @@ class ComplainWithAI(LoginRequiredMixin, View):
             cache.set('default_cache_key', {'history': chat.history}, 60 * 10)
 
         if data.get('submit', 'false') == 'true':
-            complaint, status, fields_name = self.generate_complaint(chat)
-            complaint_id = None
-            redirect_url = ''
+            complaint_id, status, fields_name = self.generate_complaint(chat, request.user)
 
             if not status:
                 return JsonResponse(
                     {
                         "response": f"Please provide some more information on these fields: {fields_name}",
                         'status': status,
-                        'redirect': redirect_url
+                        'complaint_id': complaint_id
                     }
                 )
             else:
+
                 return JsonResponse(
                     {
                         "response": f"Thank you for your time. Your complaint has been registered! You will be"
                                     f" redirected to the complaint shortly!",
                         'status': status,
-                        'redirect': redirect_url,
                         'complaint_id': complaint_id
+
                     }
                 )
+
+        requirements = self.get_requirements("If any field data is missing,"
+                                             " you may ask for it first then when I provide the data you can generate "
+                                             "the json!. If a image is provided you should analyse the image for "
+                                             "kind of violation it is making, and the risk it's making for others and"
+                                             "generate the complaint details and title on your own.")
 
         if 'file' in file:
             # Open the image using PIL
             image = Image.open(file.get('file'))
+            attachment = Attachment.objects.create(file=file.get('file'), file_type='image')
+            attachment.save()
+
+            attachment_id_cache_key = f'attachment_cache_{request.user.id}'
+            cached_data = cache.get(attachment_id_cache_key)
+            if cached_data:
+                cached_data.append(attachment.id)
+            else:
+                cached_data = [attachment.id]
+
+            cache.set(attachment_id_cache_key, cached_data, 60*10)
 
             # Create the message to send with the image and text
             message = chat.send_message([
                 image,
-                data.get('chat_text')
+                data.get('chat_text') + requirements
             ])
         else:
-            message = chat.send_message(data.get('chat_text'))
+            message = chat.send_message(data.get('chat_text') + requirements)
 
         # Update the cache with the new chat history
         cache.set('default_cache_key', {'history': chat.history}, 60 * 10)
 
-        return JsonResponse({"response": message.text, 'status': True})
+        return JsonResponse({"response": message.text, 'status': False})
 
 
 class ComplainView(LoginRequiredMixin, View):

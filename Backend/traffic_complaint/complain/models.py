@@ -60,7 +60,7 @@ class Attachment(models.Model):
 
     ]
 
-    complain = models.ForeignKey(Complain, related_name='attachment', on_delete=models.CASCADE)
+    complain = models.ForeignKey(Complain, related_name='attachment', on_delete=models.CASCADE, null=True, blank=True)
     file = models.FileField(upload_to='complain_files')
     file_type = models.CharField(max_length=10, choices=FILE_TYPE_CHOICES)
 
