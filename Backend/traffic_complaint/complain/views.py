@@ -146,7 +146,7 @@ class ComplainWithAI(LoginRequiredMixin, View):
                 attachment_data.save()
 
             cache.set(attachment_id_cache_key, [], 10)
-            cache.set('default_cache_key_' + user.id, [], 10)
+            cache.set(f'default_cache_key_{user.id}', [], 10)
 
         return complaint_id, status, missing_fields
 
