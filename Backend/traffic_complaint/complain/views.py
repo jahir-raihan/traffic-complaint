@@ -146,6 +146,7 @@ class ComplainWithAI(LoginRequiredMixin, View):
                 attachment_data.save()
 
             cache.set(attachment_id_cache_key, [], 10)
+            cache.set('default_cache_key_' + user.id, [], 10)
 
         return complaint_id, status, missing_fields
 
@@ -165,12 +166,14 @@ class ComplainWithAI(LoginRequiredMixin, View):
         genai.configure(api_key=GOOGLE_API_KEY)
 
         model = genai.GenerativeModel('gemini-1.5-flash')
-        cached_chat_data = cache.get('default_cache_key')
+        cache_key = f'default_cache_key_{request.user.id}'
+        cached_chat_data = cache.get(cache_key)
+
         if cached_chat_data:
             chat = model.start_chat(history=cached_chat_data['history'])
         else:
             chat = model.start_chat(history=[])
-            cache.set('default_cache_key', {'history': chat.history}, 60 * 10)
+            cache.set('default_cache_key', {'history': chat.history}, 60 * 20)
 
         if data.get('submit', 'false') == 'true':
             complaint_id, status, fields_name = self.generate_complaint(chat, request.user)
@@ -195,16 +198,18 @@ class ComplainWithAI(LoginRequiredMixin, View):
                     }
                 )
 
-        requirements = self.get_requirements("If any field data is missing,"
-                                             "you should ask for it first before response as json format, and don't ask"
-                                             " for title and details you can generate by analysing the image"
-                                             " then when I provide the data you can generate "
-                                             "the json not before that!. If a image is provided you should analyse"
-                                             " the image for "
-                                             "kind of violation it is making, and the risk it's making for others,"
-                                             " vehicle number and"
-                                             "generate the complaint details and title on your own. I repeat if any "
-                                             "field is missing, first ask for the fields without responding in json.")
+        requirements = self.get_requirements(
+             "If any field data is missing,"
+             "you should ask for it first before response as json format, and don't ask"
+             " for title and details you can generate by analysing the image"
+             " then when I provide the data you can generate "
+             "the json not before that!. If a image is provided you should analyse"
+             " the image for "
+             "kind of violation it is making, and the risk it's making for others,"
+             " vehicle number and"
+             "generate the complaint details and title on your own. I repeat if any "
+             "field is missing, first ask for the fields without responding in json."
+        )
 
         if 'file' in file:
             # Open the image using PIL
@@ -230,7 +235,7 @@ class ComplainWithAI(LoginRequiredMixin, View):
             message = chat.send_message(data.get('chat_text') + requirements)
 
         # Update the cache with the new chat history
-        cache.set('default_cache_key', {'history': chat.history}, 60 * 10)
+        cache.set(cache_key, {'history': chat.history}, 60 * 10)
 
         return JsonResponse({"response": message.text, 'status': False})
 
