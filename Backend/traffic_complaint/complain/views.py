@@ -196,10 +196,15 @@ class ComplainWithAI(LoginRequiredMixin, View):
                 )
 
         requirements = self.get_requirements("If any field data is missing,"
-                                             " you may ask for it first then when I provide the data you can generate "
-                                             "the json!. If a image is provided you should analyse the image for "
-                                             "kind of violation it is making, and the risk it's making for others and"
-                                             "generate the complaint details and title on your own.")
+                                             "you should ask for it first before response as json format, and don't ask"
+                                             " for title and details you can generate by analysing the image"
+                                             " then when I provide the data you can generate "
+                                             "the json not before that!. If a image is provided you should analyse"
+                                             " the image for "
+                                             "kind of violation it is making, and the risk it's making for others,"
+                                             " vehicle number and"
+                                             "generate the complaint details and title on your own. I repeat if any "
+                                             "field is missing, first ask for the fields without responding in json.")
 
         if 'file' in file:
             # Open the image using PIL
