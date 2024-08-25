@@ -61,9 +61,7 @@ class ComplainWithAI(LoginRequiredMixin, View):
         :return HTTPResponse:
         """
 
-        context = {
-
-        }
+        context = {}
 
         return render(request, self.template_name, context)
 
