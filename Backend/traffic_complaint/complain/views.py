@@ -70,7 +70,7 @@ class ComplainWithAI(LoginRequiredMixin, View):
         """
         Return the requirements text containing commands
 
-        :return:
+        :return string:
         """
 
         requirements = ("Generate a complaint out of the texts you've received and the chat you had with me. And the "
